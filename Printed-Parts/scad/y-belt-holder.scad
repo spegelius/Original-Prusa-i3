@@ -97,7 +97,7 @@ module selective_infill()
     }
     
     
-module final_part()
+module y_belt_holder()
 {
 difference()
     {
@@ -110,6 +110,6 @@ difference()
 }
 }    
    
-final_part();
+y_belt_holder();
 
    

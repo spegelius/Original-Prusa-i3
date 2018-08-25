@@ -86,7 +86,7 @@ module corner(){
 
 }
 
-corner();
+rotate([90,0,0]) corner();
 
 
 

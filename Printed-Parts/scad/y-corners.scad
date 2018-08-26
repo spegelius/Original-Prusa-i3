@@ -5,10 +5,27 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://prusamendel.org
 
+use <../../Dollo/NEW_long_ties/include.scad>;
 
 module corner_base(){	
  translate([-9,-11,0])cube([18,22,49]);
  
+}
+
+module rod_holes() {
+    // Top smooth rod insert
+    // Smooth rod place
+    translate([11,2.75,47]) rotate([0,90,90]) cylinder(h = 10, r=4.2, $fn=30); 
+    // Ziptie
+    translate([-5,6,41])  cube([30,3.5,2]);
+
+    // LM8UU keepout
+    difference(){
+    translate([11,12.5,46]) rotate([0,90,90]) cylinder(h = 270, r=8, $fn=30);
+    translate([21,12.5,62]) rotate([0,90,90]) cube([20,20,30]);
+    } 
+
+    translate([21,12.5,57]) rotate([0,90,90]) cube([15.2,20,20]);
 }
 
 module corner_holes(){
@@ -26,21 +43,7 @@ module corner_holes(){
 
   // Washer hole
   translate([11,-3,20]) rotate([0,0,90]) rotate([0,90,0]) translate([0,0,-5]) cylinder(h = 10, r=11, $fn=30);
-
-  // Top smooth rod insert
-  // Smooth rod place
-  translate([11,2.75,47]) rotate([0,90,90]) cylinder(h = 10, r=4.2, $fn=30); 
-  // Ziptie
-  translate([-5,6,41])  cube([30,3.5,2]);
-  
-  // LM8UU keepout
-  difference(){
-    translate([11,12.5,46]) rotate([0,90,90]) cylinder(h = 270, r=8, $fn=30);
-    translate([21,12.5,62]) rotate([0,90,90]) cube([20,20,30]);
-  } 
-  
-  translate([21,12.5,57]) rotate([0,90,90]) cube([15.2,20,20]);
- 
+    rod_holes();
  }
  
 }
@@ -86,7 +89,44 @@ module corner(){
 
 }
 
-rotate([90,0,0]) corner();
+module _dollo_corner(rod_position) {
+    difference() {
+        translate([-14,0,30]) cube([50,rod_position+21.1,19]);
+        translate([1.2+19,-1,39]) cube([40,rod_position+23.1,30]);
+        translate([-20,-1,39]) cube([21.2,rod_position+23.1,30]);
+        translate([0,rod_position,0]) rod_holes();
+        translate([-30,15,29.99]) rotate([90,0,90]) male_dovetail(70,bridge_extra=0.5);
+        translate([1,45,29.99]) rotate([90,0,0]) male_dovetail(70,bridge_extra=0.5);
+        
+        // nicing on the cake
+        translate([-60.7,20,0]) rotate([0,0,-45]) cube([70,40,50]);
+        translate([-2,60,0]) rotate([0,0,-45]) cube([70,40,50]);
+        
+        translate([-30,-10,39]) rotate([-45,0,0]) cube([100,10,30]);
+        translate([-25,-1,39]) rotate([0,45,0]) cube([10,50,30]);
+        
+    }
+    
+}
 
+module dollo_corner_left() {
+    _dollo_corner(13.9);
+}
+
+module dollo_corner_right() {
+    mirror([1,0,0]) dollo_corner_left();
+}
+
+module dollo_corner_back_right() {
+    rotate([0,0,180]) _dollo_corner(19.9);
+}
+
+module dollo_corner_back_left() {
+    mirror([1,0,0]) dollo_corner_back_right();
+}
+
+//rotate([90,0,0]) corner();
+//dollo_corner_left();
+dollo_corner_right();
 
 

@@ -4,8 +4,12 @@ use <PSU-Y-part.scad>;
 use <y-motor.scad>;
 use <y-idler.scad>;
 use <y-belt-holder.scad>;
+use <Y-distance.scad>;
 
 use <../../AluParts/alu-frame.scad>;
+
+use <../../Dollo/NEW_long_ties/extention.scad>;
+include <../../Dollo/NEW_long_ties/globals.scad>;
 
 corner_y_offset = 146;
 corner_x_offset = 152/2+18/2;
@@ -70,20 +74,76 @@ module bed_carriage_assembly() {
 }
 
 
-module view() {
+module view_original() {
     corners();
     //PSU Y part
     color("black") translate([corner_x_offset+13, corner_y_offset-13,6]) final_part();
     threaded_rods();
     // Y motor
-    translate([corner_x_offset-65,corner_y_offset+11,0]) rotate([90,0,-90]) y_motor();
+    color("DarkOrange") translate([corner_x_offset-65,corner_y_offset+11,0]) rotate([90,0,-90]) y_motor();
     // Y idler
-    translate([-19/2,-corner_y_offset+9,22]) rotate([0,0,180]) y_idler();
+    color("DarkOrange") translate([-19/2,-corner_y_offset+9,22]) rotate([0,0,180]) y_idler();
     y_rods();
+
+    color("DarkOrange") translate([40,corner_y_offset+15,20]) rotate([90,0,-90]) y_distance();
+    
     color("DarkSlateGray") translate([-185,corner_y_offset-22-100,0]) rotate([90,0,0]) frame();
     bed_carriage_assembly();
+    
 }
 
-view();
+module extention_cross() {
+    difference() {
+        extention_base(70);
+        translate([-1,70/2,0]) rotate([90,0,90]) male_dovetail(32);
+        translate([-1,70/2,30]) rotate([90,180,90]) male_dovetail(32);
+        
+        translate([30,70/2,15]) rotate([0,45,90]) tie_end();
+        translate([0,70/2,15]) rotate([0,45,-90]) tie_end();
+        
+        translate([15,70/2,15]) rotate([0,90,0]) cylinder(h=50, d= metal_rod_size, center=true);
+    }
+}
 
+module view_new() {
+    color("lightgrey") {
+        translate([120-40,48,0]) rotate([-90,0,0]) extention(3, support=false);
+        translate([120-40,-132,0]) rotate([-90,0,0]) extention(5, support=false);
+
+        translate([-120+10,48,0]) rotate([-90,0,0]) extention(3, support=false);
+        translate([-120+10,-132,0]) rotate([-90,0,0]) extention(5, support=false);
+        
+        translate([-120/2,corner_y_offset+42,0]) rotate([-90,0,-90]) extention(4, support=false);
+        translate([-120/2,-corner_y_offset-6,0]) rotate([-90,0,-90]) extention(4, support=false);
+        translate([-120/2,corner_y_offset-22-76.3,0]) rotate([-90,0,-90]) extention(4, support=false);
+        
+        translate([-120+25,120+53,30]) rotate([90,0,45]) extention_90_bend();
+        translate([120-25,120+53,30]) rotate([90,0,-45]) extention_90_bend();
+
+        translate([-120+25,-120-47,30]) rotate([90,0,135]) extention_90_bend();
+        translate([120-25,-120-47,30]) rotate([90,0,-135]) extention_90_bend();
+        
+        translate([-165,corner_y_offset-22-76.3,15]) rotate([0,45,0]) extention_90_bend();
+        translate([165,corner_y_offset-22-76.3,15]) rotate([0,-45,0]) extention_90_bend();
+        
+        //translate([400,0,0]) {
+            translate([-180,corner_y_offset-22-76.3,50]) extention(4, support=false);
+            translate([150,corner_y_offset-22-76.3,30]) extention(4, support=false);
+        //}
+        
+        translate([-70-120/2,corner_y_offset-22-76.3,0]) rotate([0,0,-90]) extention_cross();
+        translate([120/2,corner_y_offset-22-76.3,0]) rotate([0,0,-90]) extention_cross();
+    }
+    
+    y_rods();
+    color("white") translate([-120+24,-182,0]) dollo_corner_left();
+    color("white") translate([120-24,-182,0]) dollo_corner_right();
+    
+    color("white") translate([120-24,188,0]) dollo_corner_back_right();
+    color("white") translate([-120+24,188,0]) dollo_corner_back_left();
+}
+
+//translate([200,0,0]) view_original();
+translate([-200,0,0]) view_new();
+//extention_cross();
 //bed_carriage_assembly();

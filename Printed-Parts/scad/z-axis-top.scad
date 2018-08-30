@@ -5,6 +5,7 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://prusamendel.org
 
+use <../../Dollo/NEW_long_ties/include.scad>;
 
 module z_top_base(){
     translate([0,-5,0]) cube([8,45,16]); // plate touching the base
@@ -80,7 +81,29 @@ module z_top_left(){
     }
 }
 
-    // Final parts
-    z_top_left();
-    z_top_right();
+module dollo_z_top_right() {
+    difference() {
+        union() {
+            z_top_right();
+            //translate([-22.3,-3,0]) cube([30.3,46,40]);
+            translate([-22.3,-3,0]) chamfered_cube(30.3,46,25,2);
+            translate([-20,2,0]) chamfered_cylinder(10,25,2,$fn=50);
+            translate([-20,38,0]) chamfered_cylinder(10,25,2,$fn=50);
+        }
+        translate([-32.3,5,-1]) cube([30,30,60]);
+        translate([-2.3,20,-1]) rotate([0,0,-90]) male_dovetail(50);
+        translate([-17.3,35,-1]) rotate([0,0,0]) male_dovetail(50);
+        translate([-17.3,5,-1]) rotate([0,0,180]) male_dovetail(50);
+    }
+}
 
+module dollo_z_top_left() {
+    translate([0,-15,0]) mirror([0,1,0]) dollo_z_top_right();
+}
+
+// Final parts
+//z_top_left();
+//z_top_right();
+
+dollo_z_top_right();
+dollo_z_top_left();

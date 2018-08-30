@@ -5,6 +5,9 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://prusamendel.org
 
+use <../../Dollo/NEW_long_ties/mockups.scad>;
+use <../../Dollo/NEW_long_ties/include.scad>;
+
 module z_bottom_base(){
  translate([0,-1.5,0]) cube([8,49,16+25]); // plate touching the base
  translate([0,-5,0]) cube([30,4.01,22]); // plate touching the base
@@ -74,9 +77,33 @@ module z_bottom_left(){
  }
 }
 
+module dollo_z_bottom_right() {
+    difference() {
+        union() {
+            z_bottom_right();
+            //translate([-22.3,-3,0]) cube([30.3,46,40]);
+            translate([-22.3,-3,0]) chamfered_cube(30.3,46,40,2);
+            translate([-20,2,0]) chamfered_cylinder(10,40,2,$fn=50);
+            translate([-20,38,0]) chamfered_cylinder(10,40,2,$fn=50);
+        }
+        translate([-32.3,5,-1]) cube([30,30,60]);
+        translate([-2.3,20,-1]) rotate([0,0,-90]) male_dovetail(50);
+        translate([-17.3,35,-1]) rotate([0,0,0]) male_dovetail(50);
+        translate([-17.3,5,-1]) rotate([0,0,180]) male_dovetail(50);
+    }
+    
+    %translate([29,-1,25]) rotate([-90,0,0]) mock_stepper_motor();
+}
 
-z_bottom_right();
-z_bottom_left();
+module dollo_z_bottom_left() {
+    translate([0,-13,0]) mirror([0,1,0]) dollo_z_bottom_right();
+}
+
+//z_bottom_right();
+//z_bottom_left();
+
+dollo_z_bottom_right();
+dollo_z_bottom_left();
 
 
 

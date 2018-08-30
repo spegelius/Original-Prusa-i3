@@ -5,6 +5,8 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://prusamendel.org
 
+use <../../Dollo/NEW_long_ties/include.scad>;
+
 module base()
 {
 union(){
@@ -30,13 +32,13 @@ module cutout()
     translate([ 22, 4 , 8 ]) cylinder( h = 10, r1 = 1.7, r2=1.9,$fn=30);  // M3 hole A
     translate([ 22, 4 , -1 ]) cylinder( h = 5, r1 = 3.4, r2=3.2,$fn=6);  // M3 nut body A        
     translate([ 22, 4 , -1 ]) cylinder( h = 5, r2 = 0.1, r1 = 5, $fn=6);  // M3 nut hole fillet A
-    #translate([ 22, 4 , 4.2 ]) cube([ 3.3 , 5.8 , 0.4 ], center = true ); // bridge force A
+    translate([ 22, 4 , 4.2 ]) cube([ 3.3 , 5.8 , 0.4 ], center = true ); // bridge force A
         
     translate([ 22, -16 , -2 ]) cylinder( h = 20, r = 1.7, $fn=30);  // M3 hole B
     translate([ 22, -16 , 8 ]) cylinder( h = 10, r1 = 1.7, r2=1.9, $fn=30);  // M3 hole B
     translate([ 22, -16 , -1 ]) cylinder( h = 5, r1 = 3.4, r2=3.2, $fn=6);  // M3 nut body B
     translate([ 22, -16 , -1 ]) cylinder( h = 5, r2 = 0.1, r1 = 5, $fn=6);  // M3 nut hole B fillet
-    #translate([ 22, -16 , 4.2 ]) cube([ 3.3 , 5.8 , 0.4 ], center = true ); // bridge force B
+    translate([ 22, -16 , 4.2 ]) cube([ 3.3 , 5.8 , 0.4 ], center = true ); // bridge force B
 
     translate([ -13, 14 , 14 ]) rotate([90,0,0]) cylinder( h = 25, r = 5.2, $fn=30);  // threaded rod
     
@@ -70,7 +72,7 @@ module cutout()
     translate([ -21, 2, 5 ]) cube([ 0.5, 9, 18 ]);  
     }
 
-module final_part(){
+module PSU_y_part(){
 difference()
 {
     base();
@@ -78,5 +80,17 @@ difference()
     }
 }
 
-final_part();
+module dollo_PSU_y_part() {
+    difference() {
+        union() {
+            PSU_y_part();
+            translate([0,-20]) cube([18,32.9,17.5]);
+        }
+        translate([-25,-20,-1]) cube([37,50,40]);
+        translate([12,25,9]) rotate([90,90,0]) male_dovetail(50);
+    }
+}
+
+//PSU_y_part();
+dollo_PSU_y_part();
     

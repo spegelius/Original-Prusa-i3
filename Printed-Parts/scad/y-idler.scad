@@ -5,6 +5,7 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://prusamendel.org
 
+use <../../Dollo/NEW_long_ties/include.scad>;
 
 module y_idler_base(){
  translate(v = [0,0,0]) cylinder(h = 19, r=8);	
@@ -27,4 +28,23 @@ module y_idler(){
  }
 }
 
-y_idler();
+module dollo_y_idler() {
+    difference() {
+        union() {
+            difference() {
+                y_idler();
+                translate([-30,15,-1]) cube([40,40,40]);
+            }
+            translate([-22.5,12,-30]) cube([25,30,46]);
+            translate([-22.5,42,-25]) rotate([0,90,0]) cylinder(d=10,h=25,$fn=50);
+            translate([-22.5,42,11]) rotate([0,90,0]) cylinder(d=10,h=25,$fn=50);
+        }
+        translate([-25,21,-22]) cube([30,40,30]);
+        translate([-25,36,-22]) rotate([-90,0,-90]) male_dovetail(30);
+        translate([-25,36,8]) rotate([90,0,90]) male_dovetail(30);
+        translate([-25,21,-7]) rotate([90,-90,90]) male_dovetail(30);
+    }
+}
+
+//y_idler();
+dollo_y_idler();

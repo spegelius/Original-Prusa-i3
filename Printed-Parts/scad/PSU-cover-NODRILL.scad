@@ -162,7 +162,7 @@ difference()
 }
 
 
-module FINAL_PART(){
+module PSU_cover(){
     union()
         {
             PSU_COVER();
@@ -172,5 +172,5 @@ module FINAL_PART(){
         }   
 }
 
-FINAL_PART();
+PSU_cover();
 

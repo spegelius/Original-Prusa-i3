@@ -115,24 +115,35 @@ module _dollo_corner(rod_position) {
     
 }
 
-module dollo_corner_left() {
+module dollo_y_corner_left() {
     _dollo_corner(19.9);
 }
 
-module dollo_corner_right() {
-    mirror([1,0,0]) dollo_corner_left();
+module dollo_y_corner_right() {
+    mirror([1,0,0]) dollo_y_corner_left();
 }
 
-module dollo_corner_back_right() {
-    rotate([0,0,180]) _dollo_corner(13.9);
+module dollo_y_corner_back_right() {
+    rotate([0,0,180]) _dollo_corner(14.9);
 }
 
-module dollo_corner_back_left() {
-    mirror([1,0,0]) dollo_corner_back_right();
+module dollo_y_corner_back_left() {
+    mirror([1,0,0]) dollo_y_corner_back_right();
+}
+
+// use if the rods heve some free room to move
+module corner_pad() {
+    union() {
+        cylinder(d=8,h=1,$fn=30);
+        translate([0,8/2,1/2]) cube([6,3,1],center=true);
+    }
 }
 
 //rotate([90,0,0]) corner();
-dollo_corner_left();
-//dollo_corner_right();
-//dollo_corner_back_left();
+//dollo_y_corner_left();
+//dollo_y_corner_right();
+//dollo_y_corner_back_left();
+dollo_y_corner_back_right();
+
+//corner_pad();
 

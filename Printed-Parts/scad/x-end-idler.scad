@@ -9,8 +9,8 @@ use <x-end.scad>
 
 
 
-module x_end_idler_holes(){
-    x_end_holes();
+module x_end_idler_holes(brass_nut=false){
+    x_end_holes(brass_nut=brass_nut);
     translate([0,3.5,0]){
     translate(v=[0,-22,30.25]) rotate(a=[0,-90,0]) cylinder(h = 80, r=1.8, $fn=30);
     translate(v=[1.5,-22,30.25]) rotate(a=[0,-90,0]) cylinder(h = 10, r=3.1, $fn=30);
@@ -42,11 +42,11 @@ module waste_pocket(){
 }
 
 
-module x_end_idler_base(){
+module x_end_idler_base(brass_nut=false){
     union(){
         difference(){
             x_end_base();
-            x_end_idler_holes();
+            x_end_idler_holes(brass_nut=brass_nut);
         }
         translate([-15,10.5,6]) rotate([90,0,0]) cylinder( h=13, r=6, $fn=30);
         translate([-15,10.5,51]) rotate([90,0,0]) cylinder( h=13, r=6, $fn=30);
@@ -94,11 +94,11 @@ module reinforcement_selective_infill(){
     
     }
     
-module x_end_idler(){
+module x_end_idler(brass_nut=false){
     mirror([0,1,0]) 
     difference()
     {
-        x_end_idler_base();
+        x_end_idler_base(brass_nut=brass_nut);
         waste_pocket();
         selective_infill();
         reinforcement_selective_infill();
@@ -106,6 +106,7 @@ module x_end_idler(){
 }
 
 
-x_end_idler();
+//x_end_idler();
+x_end_idler(brass_nut=true);
 
 

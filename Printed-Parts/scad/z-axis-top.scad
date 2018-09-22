@@ -45,13 +45,13 @@ module z_top_holes(){
     translate([4,10+20-3.1,10]) cube([10,6.2,10]);
 
     // Z rod holder
-    translate([25+4.3,3.2,-1]) rotate([0,0,0]) cylinder(h = 50, r=4.1, $fn=15);
+    translate([25+4.3,3,-1]) rotate([0,0,0]) cylinder(h = 50, r=4.1, $fn=15);
 
     
     // material saving cut
     translate([16,10,-1]) rotate([0,0,0]) cylinder(h = 50, r=8, $fn=6);  
     translate([16,28,-1]) rotate([0,0,0]) cylinder(h = 50, r=8, $fn=6);  
-    translate([25+4.3,3.2+17,-1]) rotate([0,0,0]) cylinder(h = 50, r=5.8, $fn=15); // screw hole
+    translate([25+4.3,3+17,-1]) rotate([0,0,0]) cylinder(h = 50, r=5.8, $fn=15); // screw hole
 
     translate([25+4.3-1,3,-1]) cube([2,15,7]); // it's bit up because it helps with printing
     
@@ -102,8 +102,8 @@ module dollo_z_top_left() {
 }
 
 // Final parts
-//z_top_left();
-//z_top_right();
+z_top_left();
+z_top_right();
 
-dollo_z_top_right();
-dollo_z_top_left();
+//dollo_z_top_right();
+//dollo_z_top_left();

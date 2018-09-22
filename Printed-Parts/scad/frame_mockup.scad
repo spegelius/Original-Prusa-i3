@@ -8,6 +8,9 @@ use <Y-distance.scad>;
 use <z-axis-bottom.scad>;
 use <z-axis-top.scad>;
 use <PSU-cover-NODRILL.scad>;
+use <feet.scad>;
+use <x-end-motor.scad>;
+use <x-end-idler.scad>;
 
 use <../../AluParts/alu-frame.scad>;
 
@@ -68,8 +71,8 @@ module y_rods() {
 }
 
 module z_rods() {
-    translate([-181.8,10.4,50]) smooth_rod_z();
-    translate([181.8,10.4,50]) smooth_rod_z();
+    translate([-182,10.4,50]) smooth_rod_z();
+    translate([182,10.4,50]) smooth_rod_z();
 }
 
 module bed_carriage_assembly() {
@@ -80,6 +83,12 @@ module bed_carriage_assembly() {
         translate([25+170,110-24/2,6.3+7.5-1.9]) rotate([-90,0,0]) mock_LM8UU();
         color("DarkOrange") translate([205/2,205/2+23,26+6.3]) rotate([-90,0,-90]) y_belt_holder();
     }
+}
+
+module x_ends() {
+    // x ends
+    translate([-182,corner_y_offset-130-5.5,58+55+37]) rotate([0,180,90]) x_end_motor();
+    translate([182,corner_y_offset-130-5.5,58+55+37]) rotate([0,180,90]) x_end_idler();
 }
 
 module view_original() {
@@ -101,19 +110,23 @@ module view_original() {
     translate([185,corner_y_offset-100-6.3,55]) rotate([180,0,-90]) z_bottom_right();
     translate([-198,corner_y_offset-100-6.3,55]) rotate([180,0,-90]) z_bottom_left();
     
-    translate([185,corner_y_offset-100-6.3,370]) rotate([180,0,-90]) z_top_right();
-    translate([-200,corner_y_offset-100-6.3,370]) rotate([180,0,-90]) z_top_left();
+    color("Grey") {
+        translate([185,corner_y_offset-100-6.3,370]) rotate([180,0,-90]) z_top_right();
+        translate([-200,corner_y_offset-100-6.3,370]) rotate([180,0,-90]) z_top_left();
+    }
+
     z_rods();
     
     color("DarkSlateGray") translate([-185,corner_y_offset-100,0]) rotate([90,0,0]) frame();
     //translate([0,corner_y_offset,0]) cube([100,1,10]);
     bed_carriage_assembly();
     
+    x_ends();
 }
 
 module extention_cross() {
     difference() {
-        extention_base(70);
+        extention_base(70, support=false);
         translate([-1,70/2,0]) rotate([90,0,90]) male_dovetail(32);
         translate([-1,70/2,30]) rotate([90,180,90]) male_dovetail(32);
         
@@ -128,12 +141,16 @@ module extention_middle() {
     difference() {
         extention(support=false);
         translate([35,-15,60]) hull() {
-            cube([35,35,40],center=true);
+            cube([40,35,40],center=true);
             cube([5,35,70],center=true);
         }
-        translate([16,-28.6,78]) rotate([45,0,0]) cube([10,5,10]);
-        translate([16,-5,81.5]) rotate([-45,0,0]) cube([10,5,10]);
+        translate([20,-30.3,85]) rotate([45,0,0]) cube([10,5,10],center=true);
+        translate([20,0.3,85]) rotate([-45,0,0]) cube([10,5,10],center=true);
     }
+}
+
+module extention_130() {
+    rotate([90,0,0]) extention_base(130, support=true);
 }
 
 module view_new() {
@@ -143,74 +160,95 @@ module view_new() {
 
         translate([-120+10,72,0]) rotate([-90,0,0]) extention(2, support=false);
         translate([-120+10,-138,0]) rotate([-90,0,0]) extention(6, support=false);
-        
+
         translate([-120/2,corner_y_offset+36,0]) rotate([-90,0,-90]) extention(4, support=false);
         translate([-120/2,-corner_y_offset-12,0]) rotate([-90,0,-90]) extention(4, support=false);
         translate([-120/2,corner_y_offset-104,0]) rotate([-90,-90,-90]) extention_middle();
         
-        translate([-120+23,120+49,30]) rotate([90,0,45]) extention_90_bend();
-        translate([120-23,120+49,30]) rotate([90,0,-45]) extention_90_bend();
+        translate([-120+23,120+49,30]) rotate([90,0,45]) extention_90_bend(support=false);
+        translate([120-23,120+49,30]) rotate([90,0,-45]) extention_90_bend(support=false);
 
-        translate([-120+23,-120-55,30]) rotate([90,0,135]) extention_90_bend();
-        translate([120-23,-120-55,30]) rotate([90,0,-135]) extention_90_bend();
-        
-        translate([-167,corner_y_offset-74,13]) rotate([0,45,0]) extention_90_bend(true);
-        translate([167,corner_y_offset-74,13]) rotate([0,-45,0]) extention_90_bend(true);
-        
+        translate([-120+23,-120-55,30]) rotate([90,0,135]) extention_90_bend(support=false);
+        translate([120-23,-120-55,30]) rotate([90,0,-135]) extention_90_bend(support=false);
+
+        translate([-167,corner_y_offset-74,13]) rotate([0,45,0]) extention_90_bend(true, support=false);
+        translate([167,corner_y_offset-74,13]) rotate([0,-45,0]) extention_90_bend(true, support=false);
+
+        translate([-167,corner_y_offset-74,447]) rotate([0,135,0]) extention_90_bend(true, support=false);
+        translate([167,corner_y_offset-74,447]) rotate([0,-135,0]) extention_90_bend(true, support=false);
+
         //translate([400,0,0]) {
             translate([-180,corner_y_offset-74,50]) extention(4, support=false);
             translate([150,corner_y_offset-74,50]) extention(4, support=false);
-            
+
             translate([-180,corner_y_offset-74,170]) extention(4, support=false);
             translate([150,corner_y_offset-74,170]) extention(4, support=false);
-            
+
             translate([-180,corner_y_offset-74,290]) extention(4, support=false);
             translate([150,corner_y_offset-74,290]) extention(4, support=false);
 
-
+            translate([0,corner_y_offset-74,430]) rotate([0,0,-90]) extention_base(130, support=false);
+            translate([-130,corner_y_offset-74,430]) rotate([0,0,-90]) extention_base(130, support=false);
         //}
         
         translate([-70-120/2,corner_y_offset-74,0]) rotate([0,0,-90]) extention_cross();
         translate([120/2,corner_y_offset-74,0]) rotate([0,0,-90]) extention_cross();
     }
-    
+
     // extra z height
     z_offset = 20;
-    
+
     color("white") {
-        translate([-120+24,-188,0]) dollo_corner_left();
-        translate([120-24,-188,0]) dollo_corner_right();
-    
-        translate([120-24,182,0]) dollo_corner_back_right();
-        translate([-120+24,182,0]) dollo_corner_back_left();
-        
-        translate([185,corner_y_offset-100-6.3,z_offset+55]) rotate([180,0,-90]) dollo_z_bottom_right();
-        translate([-198,corner_y_offset-100-6.3,z_offset+55]) rotate([180,0,-90]) dollo_z_bottom_left();
-    
-        translate([185,corner_y_offset-100-6.3,z_offset+370]) rotate([180,0,-90]) dollo_z_top_right();
+        translate([-120+24,-188,0]) dollo_y_corner_left();
+        translate([120-24,-188,0]) dollo_y_corner_right();
+
+        translate([120-24,182,0]) dollo_y_corner_back_right();
+        translate([-120+24,182,0]) dollo_y_corner_back_left();
+
+        // for motors that don't need z coupler
+        //translate([185,corner_y_offset-100-6.3,z_offset+55]) rotate([180,0,-90]) dollo_z_bottom_right();
+        //translate([-198,corner_y_offset-100-6.3,z_offset+55]) rotate([180,0,-90]) dollo_z_bottom_left();
+
+        // for motors that need z coupler
+        color("grey") translate([185,corner_y_offset-100-6.3,z_offset+42]) rotate([180,0,-90]) dollo_z_bottom_right(true);
+        translate([-198,corner_y_offset-100-6.3,z_offset+42]) rotate([180,0,-90]) dollo_z_bottom_left(true);
+
+        //translate([185,corner_y_offset-100-6.3,z_offset+370]) rotate([180,0,-90]) dollo_z_top_right();
         translate([-200,corner_y_offset-100-6.3,z_offset+370]) rotate([180,0,-90]) dollo_z_top_left();
     }
     
-    y_rods();
+    //y_rods();
 
     //PSU Y part
     color("black") translate([corner_x_offset+13, corner_y_offset-13,6]) dollo_PSU_y_part();
-    
+
     translate([130.5,49+30-4+5,24]) rotate([90,0,90]) PSU_cover();
-    
+
     // Y motor
-    color("DarkOrange") translate([corner_x_offset-65,corner_y_offset+11,0]) rotate([90,0,-90]) dollo_y_motor();
-    
+    color("white") translate([corner_x_offset-65,corner_y_offset+11,0]) rotate([90,0,-90]) dollo_y_motor();
+
     // Y idler
-    color("DarkOrange") translate([-19/2,-corner_y_offset+9,22]) rotate([0,0,180]) dollo_y_idler();
-    
-    translate([0,0,z_offset]) z_rods();
-    
-    bed_carriage_assembly();
+    color("white") translate([28/2,-corner_y_offset+9,22]) rotate([0,90,180]) dollo_y_idler_body();
+
+    color("white") {
+        translate([120-25,-173,-10]) corner_foot();
+        translate([-120+25,-173,-10]) rotate([0,0,-90]) corner_foot();
+        translate([-120+25,167,-10]) rotate([0,0,180]) corner_foot();
+        translate([120-25,167,-10]) rotate([0,0,90]) corner_foot();
+
+        translate([156.5,57,-10]) rotate([0,0,135]) center_foot();
+        translate([-156.5,57,-10]) rotate([0,0,-45]) center_foot();
+    }
+
+    //translate([0,0,z_offset]) z_rods();
+
+    x_ends();
+    //bed_carriage_assembly();
 }
 
 //translate([200,0,0]) view_original();
 translate([-200,0,0]) view_new();
-//extention_cross();
+//rotate([90,0,0]) extention_cross();
 //extention_middle();
 //bed_carriage_assembly();
+//extention_130();

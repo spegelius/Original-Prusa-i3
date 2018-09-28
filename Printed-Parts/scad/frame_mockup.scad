@@ -110,9 +110,15 @@ module LCD_assembly(dollo=false) {
 
 //LCD_assembly(dollo=true);
 
-module PSU() {
-    translate([130.5,49,24]) rotate([90,0,90]) PSU_cover();
-    %translate([131.5,47,62.5]) rotate([90,0,90]) mock_PSU_240W();
+module PSU(dollo=false) {
+    if (dollo) {
+        translate([130.5,74,23.5]) rotate([90,0,90]) dollo_PSU_cover_240W();
+        %translate([132.5,72.5,61.5]) rotate([90,0,90]) mock_PSU_240W();
+        translate([159,72.5,22]) dollo_PSU_spacer();
+    } else {
+        translate([130.5,48,24]) rotate([90,0,90]) PSU_cover_240W();
+        %translate([132.5,46.5,62]) rotate([90,0,90]) mock_PSU_240W();
+    }
 }
 
 module view_original() {
@@ -246,9 +252,9 @@ module view_new() {
     //y_rods();
 
     //PSU Y part
-    color("black") translate([corner_x_offset+13, corner_y_offset-13,6]) dollo_PSU_y_part();
+    color("black") translate([corner_x_offset+13, corner_y_offset-8,6]) dollo_PSU_y_part();
 
-    translate([130.5,49+30-4+5,24]) rotate([90,0,90]) PSU_cover();
+    PSU(dollo=true);
 
     // Y motor
     color("white") translate([corner_x_offset-65,corner_y_offset+11,0]) rotate([90,0,-90]) dollo_y_motor();
@@ -274,8 +280,8 @@ module view_new() {
     translate([0,-5,0]) LCD_assembly(dollo=true);
 }
 
-translate([220,0,0]) view_original();
-//translate([-220,0,0]) view_new();
+//translate([220,0,0]) view_original();
+translate([-220,0,0]) view_new();
 //rotate([90,0,0]) extention_cross();
 //extention_middle();
 //bed_carriage_assembly();

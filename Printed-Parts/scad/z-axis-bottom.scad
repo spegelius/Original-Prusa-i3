@@ -93,6 +93,7 @@ module dollo_z_bottom_right(coupler=false) {
 
         if (coupler) {
             translate([-6,34,39.5]) rotate([-45,0,0]) cube([7.4,30,40],center=true);
+            translate([-20,34,51.5]) cube([21,30,40],center=true);
         } else {
             translate([-6,34,52.5]) rotate([-45,0,0]) cube([7.4,30,40],center=true);
         }
@@ -160,9 +161,9 @@ module dollo_z_coupler_rod_riser_left() {
 //dollo_z_bottom_left(false);
 
 // with z coupler
-//dollo_z_bottom_right(true);
+dollo_z_bottom_right(true);
 //dollo_z_bottom_left(true);
 
 // risers to use with couplers
 //dollo_z_coupler_rod_riser_right();
-dollo_z_coupler_rod_riser_left();
+//dollo_z_coupler_rod_riser_left();

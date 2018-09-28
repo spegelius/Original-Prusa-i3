@@ -5,8 +5,7 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://prusamendel.org
 
-
-
+use <../../Dollo/NEW_long_ties/include.scad>;
 
 module body(){
 
@@ -81,37 +80,46 @@ difference()
     translate( [ -67 , 9 , 3 ] )  cube( [ 2 , 20 , 4 ] ); 
 }
     
+module lcd_support_A() {
+    difference() {
+        rotate([0,0,45]) body();
 
+        // lightening holes
+        translate( [ -42 , 15 , -1 ] ) cylinder( h = 15, r = 14, $fn=6);  
+        translate( [ -24 , 7 , -1 ] ) cylinder( h = 15, r = 5, $fn=6);  
+        translate( [ -60 , 7 , -1 ] ) cylinder( h = 15, r = 5, $fn=6);  
+        translate( [ -60 , 23 , -1 ] ) cylinder( h = 15, r = 5, $fn=6);  
 
+        // threaded rods corners
+        translate( [ -71 , 28.5 , -1 ] ) rotate([0,0,70]) cube( [ 5 , 10 , 15 ] );   
+        translate( [ -71 , 7.5 , -1 ] ) rotate([0,0,70]) cube( [ 5 , 10 , 15 ] );      
+        translate( [ -80 , 29, -1 ] ) rotate([0,0,-70]) cube( [ 5 , 10 , 15 ] );   
+        translate( [ -82 , 7.5 , -1 ] ) rotate([0,0,-70]) cube( [ 5 , 10 , 15 ] );      
+        translate( [ -86 , 0 , -1 ] ) cube( [ 12 , 50 , 15 ] );  
+        translate( [ -83 , -16 , -1 ] ) rotate([0,0,45]) cube( [ 20 , 20 , 15 ] );  
 
-
-difference() {
-    
-rotate([0,0,45]) body();
-
-// lightening holes
-translate( [ -42 , 15 , -1 ] ) cylinder( h = 15, r = 14, $fn=6);  
-translate( [ -24 , 7 , -1 ] ) cylinder( h = 15, r = 5, $fn=6);  
-translate( [ -60 , 7 , -1 ] ) cylinder( h = 15, r = 5, $fn=6);  
-translate( [ -60 , 23 , -1 ] ) cylinder( h = 15, r = 5, $fn=6);  
-    
-// threaded rods corners
-translate( [ -71 , 28.5 , -1 ] ) rotate([0,0,70]) cube( [ 5 , 10 , 15 ] );   
-translate( [ -71 , 7.5 , -1 ] ) rotate([0,0,70]) cube( [ 5 , 10 , 15 ] );      
-translate( [ -80 , 29, -1 ] ) rotate([0,0,-70]) cube( [ 5 , 10 , 15 ] );   
-translate( [ -82 , 7.5 , -1 ] ) rotate([0,0,-70]) cube( [ 5 , 10 , 15 ] );      
-translate( [ -86 , 0 , -1 ] ) cube( [ 12 , 50 , 15 ] );  
-translate( [ -83 , -16 , -1 ] ) rotate([0,0,45]) cube( [ 20 , 20 , 15 ] );  
-
-ziptie();
-// ziptie head cutout
-translate( [ -74 , 38 , 5 ] ) rotate([90,0,0]) cylinder( h = 5, r = 3, $fn=30);  
-    
-
-
+        ziptie();
+        // ziptie head cutout
+        translate( [ -74 , 38 , 5 ] ) rotate([90,0,0]) cylinder( h = 5, r = 3, $fn=30);  
+    }
 }
 
+module dollo_lcd_support_A() {
+    mirror([1,0,0]) difference() {
+        union() {
+            lcd_support_A();
+            translate([-72,-8,0]) chamfered_cube_side(35,40,10,4);
+        }
+        translate([-85.7,-0.4,-0.1]) cube([40,40,11]);
+        translate([-85.7+25,-0.4,-0.1]) rotate([0,0,180]) male_dovetail(15);
+        translate([-45.7,-0.4+15,-0.1]) rotate([0,0,-90]) male_dovetail(15);
+        
+        translate([-85,-10,9.7]) rounded_cube(40,40,10,3);
+    }
+}
 
+//lcd_support_A();
+dollo_lcd_support_A();
 
 
 

@@ -11,6 +11,10 @@ use <PSU-cover-NODRILL.scad>;
 use <feet.scad>;
 use <x-end-motor.scad>;
 use <x-end-idler.scad>;
+use <LCD-cover-ORIGINAL.scad>;
+use <lcd-support-A.scad>;
+use <lcd-support-B.scad>;
+use <mockups.scad>;
 
 use <../../AluParts/alu-frame.scad>;
 
@@ -91,6 +95,26 @@ module x_ends() {
     translate([182,corner_y_offset-130-5.5,58+55+37]) rotate([0,180,90]) x_end_idler();
 }
 
+module LCD_assembly(dollo=false) {
+    translate([-0.5,-210,49.5]) rotate([-135,0,0]) {
+        LCD_cover(dollo=dollo);
+        if (dollo) {
+            translate([55.5,48,21.5]) rotate([225,0,0]) rotate([0,90,0]) dollo_lcd_support_A();
+            translate([-54.5,48,21.5]) rotate([45,0,0]) rotate([0,90,180]) dollo_lcd_support_B();
+        } else {
+            translate([65.5,48,21.5]) rotate([45,0,0]) rotate([0,90,180]) lcd_support_A();
+            translate([-54.5,48,21.5]) rotate([45,0,0]) rotate([0,90,180]) lcd_support_B();
+        }
+    }
+}
+
+//LCD_assembly(dollo=true);
+
+module PSU() {
+    translate([130.5,49,24]) rotate([90,0,90]) PSU_cover();
+    %translate([131.5,47,62.5]) rotate([90,0,90]) mock_PSU_240W();
+}
+
 module view_original() {
     corners();
     //PSU Y part
@@ -104,8 +128,8 @@ module view_original() {
 
     color("DarkOrange") translate([40,corner_y_offset+15,20]) rotate([90,0,-90]) y_distance();
     
-    translate([130.5,49,24]) rotate([90,0,90]) PSU_cover();
-    //%rotate([90,0,90]) mock_psu();
+    
+    PSU();
     
     translate([185,corner_y_offset-100-6.3,55]) rotate([180,0,-90]) z_bottom_right();
     translate([-198,corner_y_offset-100-6.3,55]) rotate([180,0,-90]) z_bottom_left();
@@ -122,6 +146,8 @@ module view_original() {
     bed_carriage_assembly();
     
     x_ends();
+    
+    LCD_assembly();
 }
 
 module extention_cross() {
@@ -244,10 +270,12 @@ module view_new() {
 
     x_ends();
     //bed_carriage_assembly();
+    
+    translate([0,-5,0]) LCD_assembly(dollo=true);
 }
 
-//translate([200,0,0]) view_original();
-translate([-200,0,0]) view_new();
+translate([220,0,0]) view_original();
+//translate([-220,0,0]) view_new();
 //rotate([90,0,0]) extention_cross();
 //extention_middle();
 //bed_carriage_assembly();

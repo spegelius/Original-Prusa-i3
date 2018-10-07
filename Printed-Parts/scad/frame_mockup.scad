@@ -15,6 +15,9 @@ use <LCD-cover-ORIGINAL.scad>;
 use <lcd-support-A.scad>;
 use <lcd-support-B.scad>;
 use <mockups.scad>;
+use <RAMBo-cover-base.scad>;
+use <RAMBo-cover-hinges.scad>;
+use <RAMBo-cover-doors.scad>;
 
 use <../../AluParts/alu-frame.scad>;
 
@@ -107,19 +110,36 @@ module LCD_assembly(dollo=false) {
         }
     }
 }
-
 //LCD_assembly(dollo=true);
+
+module cover(dollo=false) {
+    if (dollo) {
+        translate([-201,77,178.5]) rotate([0,90,0]) ramps_cover_base();
+        translate([-136,169,178.5]) rotate([180,90,0]) RAMBo_doors(fan=true);
+        translate([-165,75,47]) rotate([0,0,180]) dollo_lower_hinge();
+        translate([-165,62,162]) rotate([0,180,0]) dollo_upper_hinge();
+    } else {
+        translate([-185,46,178.5]) rotate([0,90,0]) rambo_cover_base();
+        translate([-134.5,51,178]) rotate([180,0,90]) upper_hinge();
+        translate([-128.5,51,63]) rotate([0,0,90]) lower_hinge();
+        translate([-130,138,178.5]) rotate([180,90,0]) RAMBo_doors();
+    }
+}
+//cover(dollo=true);
 
 module PSU(dollo=false) {
     if (dollo) {
         translate([130.5,74,23.5]) rotate([90,0,90]) dollo_PSU_cover_240W();
         %translate([132.5,72.5,61.5]) rotate([90,0,90]) mock_PSU_240W();
         translate([159,72.5,22]) dollo_PSU_spacer();
+        translate([142,49,153.5]) dollo_PSU_top_harness();
     } else {
         translate([130.5,48,24]) rotate([90,0,90]) PSU_cover_240W();
         %translate([132.5,46.5,62]) rotate([90,0,90]) mock_PSU_240W();
     }
 }
+
+
 
 module view_original() {
     corners();
@@ -154,6 +174,8 @@ module view_original() {
     x_ends();
     
     LCD_assembly();
+    
+    cover();
 }
 
 module extention_cross() {
@@ -245,7 +267,7 @@ module view_new() {
         color("grey") translate([185,corner_y_offset-100-6.3,z_offset+42]) rotate([180,0,-90]) dollo_z_bottom_right(true);
         translate([-198,corner_y_offset-100-6.3,z_offset+42]) rotate([180,0,-90]) dollo_z_bottom_left(true);
 
-        //translate([185,corner_y_offset-100-6.3,z_offset+370]) rotate([180,0,-90]) dollo_z_top_right();
+        translate([185,corner_y_offset-100-6.3,z_offset+370]) rotate([180,0,-90]) dollo_z_top_right();
         translate([-200,corner_y_offset-100-6.3,z_offset+370]) rotate([180,0,-90]) dollo_z_top_left();
     }
     
@@ -272,12 +294,13 @@ module view_new() {
         translate([-156.5,57,-10]) rotate([0,0,-45]) center_foot();
     }
 
-    //translate([0,0,z_offset]) z_rods();
+    translate([0,0,z_offset]) z_rods();
 
-    x_ends();
+    translate([0,0,220]) x_ends();
     //bed_carriage_assembly();
     
     translate([0,-5,0]) LCD_assembly(dollo=true);
+    cover(dollo=true);
 }
 
 //translate([220,0,0]) view_original();

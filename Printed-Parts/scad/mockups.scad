@@ -1,3 +1,5 @@
+use <../../Dollo/NEW_long_ties/include.scad>;
+
 
 module mock_LM8UU() {
     color("silver") difference() {
@@ -69,4 +71,15 @@ module mock_PSU_240W() {
     }
 }
 
-mock_PSU_240W();
+module mock_40mm_fan() {
+    difference() {
+        translate([0,0,11/2]) rounded_cube_side(40,40,11,3,center=true);
+        translate([0,0,-0.1]) cylinder(d=39,h=12,$fn=40);
+        for(i=[0:3]) {
+            rotate([0,0,i*360/4]) translate([32.5/2,32.5/2,0]) cylinder(d=3.5,h=12,$fn=20);
+        }
+    }
+}
+
+//mock_PSU_240W();
+mock_40mm_fan();

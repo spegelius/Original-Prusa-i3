@@ -5,8 +5,10 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://prusamendel.org
 
-module body()
-{
+use <../../Dollo/NEW_long_ties/include.scad>;
+use <mockups.scad>;
+
+module body() {
     // side panels
     cube( [ 105.5 , 87.5 , 1 ] );  
     cube( [ 105.5 , 2 , 20 ] );  
@@ -33,24 +35,37 @@ module body()
     translate( [ 102 , 3.5 , 16.8 ] ) rotate([0,0,0]) cylinder( h = 3.2, r1 = 1.8, r2= 3.5, $fn=30); 
 }
 
-module ventilation_holes()
-    {
-     for ( i = [0 : 9] ){
-      translate([46 + (i*5.5),10.5,-1]) cube([3.65,19+50,1.2]);
-      translate([46 + (i*5.5),10.5,-1]) cube([3.65,19,10]);
-      translate([46 + (i*5.5),10.5+25,-1]) cube([3.65,19,10]);
-      translate([46 + (i*5.5),10.5+50,-1]) cube([3.65,19,10]);
-    }
-    for ( i = [0 : -6] ){
-      translate([46 + (i*5.5),10.5,-1]) cube([3.65,19+50,1.2]);
-    }
-    for ( i = [-6 : -7] ){
-      translate([46 + (i*5.5),20.5,-1]) cube([3.65,19+40,1.2]);
+fan_position = [56.5, 45];
+
+module ventilation_holes(fan) {
+
+    intersection() {
+        union() {
+            for ( i = [0 : 9] ){
+                translate([46 + (i*5.5),10.5,-1]) cube([3.65,19+50,1.2]);
+                translate([46 + (i*5.5),10.5,-1]) cube([3.65,19,10]);
+                translate([46 + (i*5.5),10.5+25,-1]) cube([3.65,19,10]);
+                translate([46 + (i*5.5),10.5+50,-1]) cube([3.65,19,10]);
+            }
+            for ( i = [-6 : 0] ){
+                translate([46 + (i*5.5),10.5,-1]) cube([3.65,19+50,1.2]);
+            }
+            for ( i = [-7 : -6] ){
+                translate([46 + (i*5.5),20.5,-1]) cube([3.65,19+40,1.2]);
+            }
+        }
+        translate([0,0,-1]) difference() {
+            cube([100,100,10]);
+            if (fan) {
+                translate([fan_position[0],fan_position[1],0]) rounded_cube(44.5,44.5,10,2, center=true);
+                translate([fan_position[0]+23.5,fan_position[1]+12.5,0]) cylinder(d=7,h=10,$fn=20);
+                translate([fan_position[0]+23.5,fan_position[1]-12.5,0]) cylinder(d=7,h=10,$fn=20);
+            }
+        }
     }
 }
 
-module cutouts()
-{
+module cutouts(fan) {
     // door closing screw
     translate( [ 58.5 , 4 , 5 ] ) cylinder( h = 17, r = 1.8, $fn=30);  
     translate( [ 58.5 , 4 , 18.5 ] ) cylinder( h = 2.6, r1 = 1.8, r2=2.2, $fn=30); 
@@ -58,7 +73,7 @@ module cutouts()
     translate( [ 0 , 0 , 2.5 ] ) cube([5.7,3.8,1], center=true);
     translate( [ 0 , 0 , 3 ] ) cube([3.8,3.8,1], center=true);}
 
-    ventilation_holes();
+    ventilation_holes(fan);
     
     // rounded side cutoff    
     translate( [ 26.5 , 87.5 , 4.5 ] ) rotate([0,90,0]) cylinder( h = 73, r = 3.5, $fn=30);   
@@ -91,29 +106,65 @@ module cutouts()
     // corners - cut
     translate( [53 , 3, 1] ) rotate([0,0,70]) cube( [ 10, 10 , 50 ] );  
     translate( [61 , 12, 1] ) rotate([0,0,-70]) cube( [ 10, 10 , 50 ] );  
-    translate( [16 , 2, 1] ) rotate([0,0,45]) cube( [ 5, 5 , 50 ] );  
-
-}
-
-module RAMBo_doors()
-{
-difference()
-{
-    body();
-    cutouts();
-    // large corner cut
-    translate( [0 , -20, -3] ) rotate([0,45,45]) cube( [ 30, 30 , 20 ] );  
+    translate( [16 , 2, 1] ) rotate([0,0,45]) cube( [ 5, 5 , 50 ] );
+    
+    if (fan) {
+        translate([fan_position[0],fan_position[1],0]) rounded_cube(40.5,40.5,10,2, center=true);
+        translate([fan_position[0]-23.5,fan_position[1]+12.5,-0.1]) cylinder(d=3.4,h=10,$fn=20);
+        translate([fan_position[0]-23.5,fan_position[1]-12.5,-0.1]) cylinder(d=3.4,h=10,$fn=20);
+        translate([fan_position[0]+23.5,fan_position[1]+12.5,-0.1]) cylinder(d=3.4,h=10,$fn=20);
+        translate([fan_position[0]+23.5,fan_position[1]-12.5,-0.1]) cylinder(d=3.4,h=10,$fn=20);
+        %translate([fan_position[0],fan_position[1],-11/2+1/2]) mock_40mm_fan();
+        %translate([fan_position[0],fan_position[1],-11/2+1/2-1.4]) fan_shroud();
+        %translate([fan_position[0],fan_position[1],11/2+1/2+1.4]) rotate([180,0,0]) fan_shroud();
     }
 }
- 
-RAMBo_doors();
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+module RAMBo_doors(fan=false) {
+    difference() {
+        body();
+        cutouts(fan);
+        // large corner cut
+        translate( [0 , -20, -3] ) rotate([0,45,45]) cube( [ 30, 30 , 20 ] );  
+    }
+}
+
+module fan_shroud() {
+    thickness = 1.6;
+    difference() {
+        union() {
+            translate([0,0,thickness/2]) rounded_cube(47,40.5,thickness,2, center=true);
+            cylinder(d=44,h=thickness,$fn=40);
+           
+            h = (11-1)/2 + thickness;
+            translate([-23.5,12.5,0]) cylinder(d=6.5,h=h,$fn=20);
+            translate([-23.5,-12.5,0]) cylinder(d=6.5,h=h,$fn=20);
+            translate([23.5,12.5,0]) cylinder(d=6.5,h=h,$fn=20);
+            translate([23.5,-12.5,0]) cylinder(d=6.5,h=h,$fn=20); 
+        }
+        difference() {
+            cylinder(d=39.5,h=thickness*3,$fn=40,center=true);
+            cylinder(d=8,h=thickness,$fn=20);
+            
+            difference() {
+                cylinder(d=26,h=thickness*3,$fn=30,center=true);
+                cylinder(d=23,h=thickness*3+1,$fn=30,center=true);
+            }
+            rotate([0,0,45]) cube([1.5,50,thickness*3],center=true);
+            rotate([0,0,-45]) cube([1.5,50,thickness*3],center=true);
+            
+        }
+        for(i=[0:3]) {
+            rotate([0,0,i*360/4]) translate([32.5/2,32.5/2,0]) cylinder(d=3.5,h=thickness*3,$fn=20,center=true);
+        }
+        
+        translate([-23.5,12.5,-0.1]) cylinder(d=3.4,h=12,$fn=20);
+        translate([-23.5,-12.5,-0.1]) cylinder(d=3.4,h=12,$fn=20);
+        translate([23.5,12.5,-0.1]) cylinder(d=3.4,h=12,$fn=20);
+        translate([23.5,-12.5,-0.1]) cylinder(d=3.4,h=12,$fn=20); 
+    }
+}
+
+//RAMBo_doors(fan=false);
+//RAMBo_doors(fan=true);
+fan_shroud();

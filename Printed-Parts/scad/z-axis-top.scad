@@ -94,6 +94,7 @@ module dollo_z_top_right() {
         translate([-2.3,20,-1]) rotate([0,0,-90]) male_dovetail(50);
         translate([-17.3,35,-1]) rotate([0,0,0]) male_dovetail(50);
         translate([-17.3,5,-1]) rotate([0,0,180]) male_dovetail(50);
+        translate([5.2,-5,12]) cube([5,50,20]);
     }
 }
 
@@ -102,8 +103,8 @@ module dollo_z_top_left() {
 }
 
 // Final parts
-z_top_left();
-z_top_right();
+//z_top_left();
+//z_top_right();
 
 //dollo_z_top_right();
-//dollo_z_top_left();
+dollo_z_top_left();

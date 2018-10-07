@@ -231,14 +231,15 @@ module dollo_PSU_cover_240W() {
 module dollo_PSU_top_harness() {
     difference() {
         union() {
-            chamfered_cube_side(46,35,6,3);
-            translate([-4.5,17.5,0]) chamfered_cube_side(55,119,6,2);
+            chamfered_cube_side(46,30,7,3);
+            translate([-13-slop,18.5,0]) chamfered_cube_side(57+2*slop,119+2*slop,7,2);
         }
-        translate([8,-7,-0.1]) cube([30,30,7]);
+        translate([8,-7,-0.1]) cube([30,30,8]);
+        translate([10.5,-7,-0.1]) cube([25,35,8]);
         translate([8.001,8,-0.1]) rotate([0,0,90]) male_dovetail();
         translate([8+30,8,-0.1]) rotate([0,0,-90]) male_dovetail();
         
-        translate([-2,23.5,-0.1]) cube([50,110,7]);
+        translate([-9.5-slop,23.5,-0.1]) cube([50+2*slop,110+2*slop,8]);
     }
 }
 

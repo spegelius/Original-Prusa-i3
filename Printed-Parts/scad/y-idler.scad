@@ -39,24 +39,23 @@ module dollo_y_idler_body() {
             translate([0,42,-25]) rotate([0,90,0]) cylinder(d=10,h=28,$fn=50);
             translate([0,42,11]) rotate([0,90,0]) cylinder(d=10,h=28,$fn=50);
 
-            translate([0,22,23]) rotate([0,90,0]) hull() {
-                translate([0,-2,0]) cylinder(d=4,h=28,$fn=30);
+            translate([0,23,27]) rotate([8,0,0]) rotate([0,90,0]) hull() {
+                translate([0,-2,]) cylinder(d=4,h=28,$fn=30);
                 translate([0,2,0]) cylinder(d=4,h=28,$fn=30);
-                translate([7,-8,0]) cube([1,12,28]);
+                translate([11,-8,0]) cube([1,12,28]);
             }
-            //%translate([23.5,0,8]) rotate([90,180,0]) dollo_y_idler_arm();
+            %translate([23.5,0,8]) rotate([90,180,0]) dollo_y_idler_arm();
         }
         hull() {
-            translate([4.2,4,12]) rotate([0,90,0]) cylinder(d=22,h=19.6,$fn=50);
-            translate([4.2,4,8]) rotate([0,90,0]) cylinder(d=22,h=19.6,$fn=50);
-            translate([4.2,4,-5]) rotate([0,90,0]) cylinder(d=19,h=19.6,$fn=50);
+            translate([4.2,5,16]) rotate([0,90,0]) cylinder(d=22,h=19.6,$fn=50);
+            translate([4.2,3,-9]) rotate([0,90,0]) cylinder(d=19,h=19.6,$fn=50);
         }
         translate([4.2,-11,-40]) cube([19.6,22,60]);
         translate([-1,21,-22]) cube([30,40,30]);
         translate([-1,6,-38]) rotate([45,0,0]) cube([30,10,30]);
 
-        translate([0,40/2,23.2]) rotate([0,45,0]) cube([10,40,20],center=true);
-        translate([28,40/2,23.2]) rotate([0,-45,0]) cube([10,40,20],center=true);
+        translate([0,40/2,26.2]) rotate([0,45,0]) cube([10,40,20],center=true);
+        translate([28,40/2,26.2]) rotate([0,-45,0]) cube([10,40,20],center=true);
 
         translate([-1,36,-22]) rotate([-90,0,-90]) male_dovetail(30);
         translate([-1,36,8]) rotate([90,0,90]) male_dovetail(30);
@@ -73,9 +72,9 @@ module dollo_y_idler_body() {
             translate([3,0,0]) cylinder(d=3.3,h=40,$fn=20);
         }
 
-        translate([28/2,12,21.5]) rotate([-90,0,0]) hull() {
+        translate([28/2,12,22.7]) rotate([-82,0,0]) hull() {
             cylinder(d=3.3,h=20,$fn=20);
-            translate([0,0.5,0]) cylinder(d=3.3,h=20,$fn=20);
+            translate([0,1.5,0]) cylinder(d=3.3,h=20,$fn=20);
         }
     }
 }
@@ -99,13 +98,15 @@ module dollo_y_idler_arm() {
         }
         translate([4,0,0]) rotate([0,90,0]) cylinder(d=22,h=11,$fn=50);
         translate([-0.1,0,0]) rotate([0,90,0]) cylinder(d=3.5,h=21,$fn=20);
-        translate([19/2,-13.5,-11]) cylinder(d=3.3,h=10,$fn=20);
-        translate([19/2,-13.5,-5]) nut(3);
+        translate([19/2,-14.5,-11]) rotate([-8,0,0]) union() {
+            cylinder(d=3.3,h=10,$fn=20);
+            translate([0,0,6.2]) nut(4);
+        }
         translate([-0.1,20,-6]) rotate([0,90,0]) cylinder(d=3.3,h=21,$fn=20);
     }
 }
 
 
 //y_idler();
-dollo_y_idler_body();
-//dollo_y_idler_arm();
+//dollo_y_idler_body();
+dollo_y_idler_arm();

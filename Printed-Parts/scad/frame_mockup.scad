@@ -14,6 +14,7 @@ use <x-end-idler.scad>;
 use <LCD-cover-ORIGINAL.scad>;
 use <lcd-support-A.scad>;
 use <lcd-support-B.scad>;
+use <LCD-cable-clip.scad>;
 use <mockups.scad>;
 use <RAMBo-cover-base.scad>;
 use <RAMBo-cover-hinges.scad>;
@@ -24,6 +25,7 @@ use <../../AluParts/alu-frame.scad>;
 use <../../Dollo/NEW_long_ties/extention.scad>;
 include <../../Dollo/NEW_long_ties/globals.scad>;
 use <../../Dollo/NEW_long_ties/psu_holder.scad>;
+use <../../Dollo/NEW_long_ties/stabilizer.scad>;
 
 corner_y_offset = 146;
 corner_x_offset = 152/2+18/2;
@@ -139,7 +141,9 @@ module PSU(dollo=false) {
     }
 }
 
-
+module bed() {
+    translate([-254/2-1,-220+50,65]) cube([254,220,3]);
+}
 
 module view_original() {
     corners();
@@ -176,6 +180,8 @@ module view_original() {
     LCD_assembly();
     
     cover();
+    
+    bed();
 }
 
 module extention_cross() {
@@ -267,11 +273,11 @@ module view_new() {
         color("grey") translate([185,corner_y_offset-100-6.3,z_offset+42]) rotate([180,0,-90]) dollo_z_bottom_right(true);
         translate([-198,corner_y_offset-100-6.3,z_offset+42]) rotate([180,0,-90]) dollo_z_bottom_left(true);
 
-        translate([185,corner_y_offset-100-6.3,z_offset+370]) rotate([180,0,-90]) dollo_z_top_right();
-        translate([-200,corner_y_offset-100-6.3,z_offset+370]) rotate([180,0,-90]) dollo_z_top_left();
+        translate([185,corner_y_offset-100-6.3,z_offset+385]) rotate([180,0,-90]) dollo_z_top_right();
+        translate([-200,corner_y_offset-100-6.3,z_offset+385]) rotate([180,0,-90]) dollo_z_top_left();
     }
     
-    //y_rods();
+    y_rods();
 
     //PSU Y part
     color("black") translate([corner_x_offset+13, corner_y_offset-8,6]) dollo_PSU_y_part();
@@ -294,13 +300,22 @@ module view_new() {
         translate([-156.5,57,-10]) rotate([0,0,-45]) center_foot();
     }
 
-    translate([0,0,z_offset]) z_rods();
+    translate([0,0,z_offset+15]) z_rods();
 
-    translate([0,0,220]) x_ends();
-    //bed_carriage_assembly();
+    translate([0,0,243]) x_ends();
+    bed_carriage_assembly();
+    bed();
     
     translate([0,-5,0]) LCD_assembly(dollo=true);
     cover(dollo=true);
+    
+    translate([165,57,320]) rotate([0,0,-90]) frame_angle_clamp();
+    translate([41,57,444]) rotate([90,0,90]) mirror([1,0,0]) frame_angle_clamp();
+    
+    translate([82,57,361]) rotate([0,-45,0]) cylinder(d=12,h=140,center=true,$fn=30);
+    
+    translate([-120+25,0,6]) rotate([0,90,-90]) dollo_lcd_cable_clip();
+   
 }
 
 //translate([220,0,0]) view_original();

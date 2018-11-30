@@ -134,18 +134,26 @@ module outer()
 
 
 
-module nozzle_fan()
+module nozzle_fan(mount=true)
 {
 difference()
     {
         union()
         {
             outer();
-            translate([10.5,35,-53]) cube([8,5,17]); 
+            if (mount) {
+                translate([10.5,35,-53]) cube([8,5,17]);
+            } else {
+                translate([10.5,35,-53]) cube([8,5,9]);
+            }
         }
         inner();
-        translate([14.5,46,-40.5]) rotate([90,0,0]) cylinder(r=3,h=8,$fn=30); 
-        translate([14.5,45,-40.5]) rotate([90,0,0]) cylinder(r=1.6,h=30,$fn=30); 
+        if (mount) {
+            translate([14.5,46,-40.5]) rotate([90,0,0]) cylinder(r=3,h=8,$fn=30); 
+            translate([14.5,45,-40.5]) rotate([90,0,0]) cylinder(r=1.6,h=30,$fn=30); 
+        } else {
+            
+        }
         
         translate([-25,30,-44]) cube([50,5,17]); 
     }
@@ -186,7 +194,8 @@ difference()
 
 
 
-nozzle_fan();
+//nozzle_fan();
+nozzle_fan(mount=false);
 
 
 

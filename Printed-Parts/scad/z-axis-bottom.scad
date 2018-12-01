@@ -92,10 +92,10 @@ module dollo_z_bottom_right(coupler=false) {
         translate([-17.3,5,-1]) rotate([0,0,180]) male_dovetail(50);
 
         if (coupler) {
-            translate([-6,34,39.5]) rotate([-45,0,0]) cube([7.4,30,40],center=true);
+            translate([-6,34,37.8]) rotate([-45,0,0]) cube([7.4,30,40],center=true);
             translate([-20,34,51.5]) cube([21,30,40],center=true);
         } else {
-            translate([-6,34,52.5]) rotate([-45,0,0]) cube([7.4,30,40],center=true);
+            translate([-6,34,50.8]) rotate([-45,0,0]) cube([7.4,30,40],center=true);
         }
     }
 

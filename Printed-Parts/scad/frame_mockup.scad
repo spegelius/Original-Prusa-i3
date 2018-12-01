@@ -23,6 +23,7 @@ use <RAMBo-cover-doors.scad>;
 use <../../AluParts/alu-frame.scad>;
 
 use <../../Dollo/NEW_long_ties/extention.scad>;
+use <../../Dollo/NEW_long_ties/corner.scad>;
 include <../../Dollo/NEW_long_ties/globals.scad>;
 use <../../Dollo/NEW_long_ties/psu_holder.scad>;
 use <../../Dollo/NEW_long_ties/stabilizer.scad>;
@@ -225,17 +226,17 @@ module view_new() {
         translate([-120/2,-corner_y_offset-12,0]) rotate([-90,0,-90]) extention(4, support=false);
         translate([-120/2,corner_y_offset-104,0]) rotate([-90,-90,-90]) extention_middle();
         
-        translate([-120+23,120+49,30]) rotate([90,0,45]) extention_90_bend(support=false);
-        translate([120-23,120+49,30]) rotate([90,0,-45]) extention_90_bend(support=false);
+        translate([-120+23,120+49,30]) rotate([90,0,45]) corner_90(corner_len=20,support=false);
+        translate([120-23,120+49,30]) rotate([90,0,-45]) corner_90(corner_len=20,support=false);
 
-        translate([-120+23,-120-55,30]) rotate([90,0,135]) extention_90_bend(support=false);
-        translate([120-23,-120-55,30]) rotate([90,0,-135]) extention_90_bend(support=false);
+        translate([-120+23,-120-55,30]) rotate([90,0,135]) corner_90(corner_len=20,support=false);
+        translate([120-23,-120-55,30]) rotate([90,0,-135]) corner_90(corner_len=20,support=false);
 
-        translate([-167,corner_y_offset-74,13]) rotate([0,45,0]) extention_90_bend(true, support=false);
-        translate([167,corner_y_offset-74,13]) rotate([0,-45,0]) extention_90_bend(true, support=false);
+        translate([-167,corner_y_offset-74,13]) rotate([0,45,0]) corner_90(corner_len=20,extra_stiff=true, support=false);
+        translate([167,corner_y_offset-74,13]) rotate([0,-45,0]) corner_90(corner_len=20,extra_stiff=true, support=false);
 
-        translate([-167,corner_y_offset-74,447]) rotate([0,135,0]) extention_90_bend(true, support=false);
-        translate([167,corner_y_offset-74,447]) rotate([0,-135,0]) extention_90_bend(true, support=false);
+        translate([-167,corner_y_offset-74,442]) rotate([0,135,0]) corner_90(corner_len=75,extra_stiff=true, support=false);
+        translate([167,corner_y_offset-74,442]) rotate([0,-135,0]) corner_90(corner_len=75,extra_stiff=true, support=false);
 
         //translate([400,0,0]) {
             translate([-180,corner_y_offset-74,50]) extention(4, support=false);
@@ -244,11 +245,10 @@ module view_new() {
             translate([-180,corner_y_offset-74,170]) extention(4, support=false);
             translate([150,corner_y_offset-74,170]) extention(4, support=false);
 
-            translate([-180,corner_y_offset-74,290]) extention(4, support=false);
-            translate([150,corner_y_offset-74,290]) extention(4, support=false);
+            translate([-180,corner_y_offset-74,290]) extention(2, support=false);
+            translate([150,corner_y_offset-74,290]) extention(2, support=false);
 
-            translate([0,corner_y_offset-74,430]) rotate([0,0,-90]) extention_base(130, support=false);
-            translate([-130,corner_y_offset-74,430]) rotate([0,0,-90]) extention_base(130, support=false);
+            translate([-75,corner_y_offset-74,455]) rotate([0,90,0]) extention(5, support=false);
         //}
         
         translate([-70-120/2,corner_y_offset-74,0]) rotate([0,0,-90]) extention_cross();
@@ -296,23 +296,18 @@ module view_new() {
         translate([-120+25,167,-10]) rotate([0,0,180]) corner_foot();
         translate([120-25,167,-10]) rotate([0,0,90]) corner_foot();
 
-        translate([156.5,57,-10]) rotate([0,0,135]) center_foot();
-        translate([-156.5,57,-10]) rotate([0,0,-45]) center_foot();
+        //translate([156.5,57,-10]) rotate([0,0,135]) center_foot();
+        //translate([-156.5,57,-10]) rotate([0,0,-45]) center_foot();
     }
 
     translate([0,0,z_offset+15]) z_rods();
 
     translate([0,0,243]) x_ends();
-    bed_carriage_assembly();
-    bed();
+    //bed_carriage_assembly();
+    //bed();
     
-    translate([0,-5,0]) LCD_assembly(dollo=true);
-    cover(dollo=true);
-    
-    translate([165,57,320]) rotate([0,0,-90]) frame_angle_clamp();
-    translate([41,57,444]) rotate([90,0,90]) mirror([1,0,0]) frame_angle_clamp();
-    
-    translate([82,57,361]) rotate([0,-45,0]) cylinder(d=12,h=140,center=true,$fn=30);
+    //translate([0,-5,0]) LCD_assembly(dollo=true);
+    //cover(dollo=true);
     
     translate([-120+25,0,6]) rotate([0,90,-90]) dollo_lcd_cable_clip();
    

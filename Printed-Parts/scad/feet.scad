@@ -1,7 +1,7 @@
 
 use <../../Dollo/NEW_long_ties/include.scad>;
 include <../../Dollo/NEW_long_ties/globals.scad>;
-use <../../Dollo/NEW_long_ties/extention.scad>;
+use <../../Dollo/NEW_long_ties/corner.scad>;
 
 module _bottom_hole() {
     union() {
@@ -45,7 +45,7 @@ module center_foot() {
             }
         }
         
-        translate([0,0,12.39]) rotate([0,45,45]) translate([-15,15,0]) hull() extention_90_bend(support=false);
+        translate([0,0,12.39]) rotate([0,45,45]) translate([-15,15,0]) hull() corner_90(support=false);
         translate([20,20,30/2+10]) rotate([0,0,-45]) cube([30,30,30],center=true);
         
 

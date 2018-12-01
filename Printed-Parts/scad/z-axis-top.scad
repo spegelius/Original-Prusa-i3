@@ -82,7 +82,7 @@ module z_top_left(){
     }
 }
 
-module dollo_z_top_right() {
+module dollo_z_top_right(hook=false) {
     difference() {
         union() {
             z_top_right();
@@ -91,9 +91,11 @@ module dollo_z_top_right() {
             translate([-20,2,0]) chamfered_cylinder(10,25,2,$fn=50);
             translate([-20,38,0]) chamfered_cylinder(10,25,2,$fn=50);
             
-            translate([-15-2.3,-15,(pin_bolt_dia_minus+8)/2]) rotate([0,90,0]) hull() {
-                translate([0,20,0]) cube([pin_bolt_dia_minus+8,1,10],center=true);
-                cylinder(d=pin_bolt_dia_minus+8,h=10,center=true,$fn=40);
+            if (hook) {
+                translate([-15-2.3,-15,(pin_bolt_dia_minus+8)/2]) rotate([0,90,0]) hull() {
+                    translate([0,20,0]) cube([pin_bolt_dia_minus+8,1,10],center=true);
+                    cylinder(d=pin_bolt_dia_minus+8,h=10,center=true,$fn=40);
+                }
             }
         }
         translate([-32.3,5,-1]) cube([30,30,60]);
@@ -102,17 +104,22 @@ module dollo_z_top_right() {
         translate([-17.3,5,-1]) rotate([0,0,180]) male_dovetail(50);
         translate([5.2,-5,12]) cube([5,50,20]);
         
-        translate([-15-2.3,-15,(pin_bolt_dia_minus+8)/2]) rotate([0,90,0]) cylinder(d=pin_bolt_dia_minus,h=11,center=true,$fn=30);
+        if (hook) {
+            translate([-15-2.3,-15,(pin_bolt_dia_minus+8)/2]) rotate([0,90,0]) cylinder(d=pin_bolt_dia_minus,h=11,center=true,$fn=30);
+        }
     }
 }
 
-module dollo_z_top_left() {
-    translate([0,-15,0]) mirror([0,1,0]) dollo_z_top_right();
+module dollo_z_top_left(hook=false) {
+    translate([0,-15,0]) mirror([0,1,0]) dollo_z_top_right(hook=hook);
 }
 
 // Final parts
 //z_top_left();
 //z_top_right();
 
-dollo_z_top_right();
+//dollo_z_top_right();
 //dollo_z_top_left();
+
+//dollo_z_top_right(true);
+dollo_z_top_left(true);

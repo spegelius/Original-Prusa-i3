@@ -36,6 +36,31 @@ module center_foot() {
     //offset = sqrt(15*12)/2;
     offset = 15;
     difference() {
+        translate([0,0,32/2]) rounded_cube_side(49.9,49.9,32,4,center=true);
+        translate([0,0,12.39]) rotate([0,45,45]) translate([-15,15,0]) hull() corner_90(support=false);
+
+        translate([30,-30,23]) rotate([0,-20,-45]) cube([30,60,70],center=true);
+        translate([-30,30,23]) rotate([0,20,-45]) cube([30,60,70],center=true);
+        translate([-30,-30,21]) rotate([0,-23,-135]) cube([30,60,70],center=true);
+
+        translate([38,38,0]) rotate([0,0,45]) cube([60,60,90],center=true);
+
+        translate([2,2,10]) rotate([-90,0,-45]) male_dovetail(40);
+        rotate([0,0,-45]) translate([-14.99,-9,25]) rotate([-90,90,0]) male_dovetail(30);
+        rotate([0,0,-45]) translate([14.99,-9,25]) rotate([-90,-90,0]) male_dovetail(30);
+
+        translate([-17,-17,0]) _bottom_hole();
+        translate([17,-17,0]) _bottom_hole();
+        translate([-17,17,0]) _bottom_hole();
+
+        translate([11,11,0]) _bottom_hole();
+    }
+}
+
+module center_foot_hook() {
+    //offset = sqrt(15*12)/2;
+    offset = 15;
+    difference() {
         union() {
             translate([0,0,32/2]) rounded_cube_side(49.9,49.9,32,4,center=true);
             translate([20,20,32/2]) rotate([0,0,-45]) rounded_cube_side(44.9,49.9,32,4,center=true);
@@ -79,4 +104,5 @@ module center_foot() {
 }
 
 //corner_foot();
-center_foot();
+//center_foot();
+center_foot_hook();

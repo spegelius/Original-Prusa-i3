@@ -214,6 +214,10 @@ module extention_130() {
     rotate([90,0,0]) extention_base(130, support=true);
 }
 
+module top_corner() {
+    corner_90(corner_len=75,extra_stiff=true, support=true);
+}
+
 module view_new() {
     color("lightgrey") {
         translate([120-40,72,0]) rotate([-90,0,0]) extention(2, support=false);
@@ -314,8 +318,9 @@ module view_new() {
 }
 
 //translate([220,0,0]) view_original();
-translate([-220,0,0]) view_new();
+//translate([-220,0,0]) view_new();
 //rotate([90,0,0]) extention_cross();
 //extention_middle();
 //bed_carriage_assembly();
 //extention_130();
+top_corner();

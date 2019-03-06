@@ -28,7 +28,7 @@ module nuttrap(){
     }
 }
 
-module PSU_COVER(width=100, depth=50, left_back_hole=[6,54.7], right_back_hole=[66.3,58]) {
+module PSU_COVER(width=100, depth=50, left_back_hole=[6,54.7], right_back_hole=[66.3,58], right_side_holes=[[58,26]]) {
     
     pillar_h = max(left_back_hole[1], right_back_hole[1]) + 6;
     
@@ -43,6 +43,13 @@ module PSU_COVER(width=100, depth=50, left_back_hole=[6,54.7], right_back_hole=[
             translate([-1.6,0,0]) cube([1.65,65,2]); // Frame skirt 1
             translate([-1.6,0,0]) cube([1.65,30,53.78]); // Frame skirt 2
             translate([-1.6,0,depth+1.32]) cube([1.65,65,2.46]); // Frame skirt 3
+            
+            // side hole extensions
+            for(h = right_side_holes) {
+                if (h[0] > 60) {
+                    translate([width-1,60,h[1]-6]) cube([3.8,h[0]-60+6,12]);
+                }
+            }
         }
 
         //pretty corners
@@ -52,21 +59,36 @@ module PSU_COVER(width=100, depth=50, left_back_hole=[6,54.7], right_back_hole=[
         translate([-3,-9,-4.46]) rotate([-45,0,0]) cube([130,10,10]);
         translate([-3,-12,depth+5.78]) rotate([-45,0,0]) cube([130,10,10]);
 
-        p1_l = left_back_hole[0]-6+3;
-        p2_l = (right_back_hole[0]-6.8) - (left_back_hole[0]-6+13.5);
+        p1_l = left_back_hole[0]-6+2.99;
+        p2_l = (right_back_hole[0]-6.8) - (left_back_hole[0]-6+13.52);
         translate([-3,45+15,-4.46]) rotate([-45,0,0]) cube([p1_l,10,10]);
-        translate([left_back_hole[0]-6+13.5,45+15,-4.46]) rotate([-45,0,0]) cube([p2_l,10,10]);
-        translate([right_back_hole[0]-6.8+14,45+15,-4.46]) rotate([-45,0,0]) cube([130,10,10]);
+        translate([left_back_hole[0]-6+13.51,45+15,-4.46]) rotate([-45,0,0]) cube([p2_l,10,10]);
+        translate([right_back_hole[0]-6.8+14.01,45+15,-4.46]) rotate([-45,0,0]) cube([130,10,10]);
         
         translate([-3,pillar_h-4,-4.46]) rotate([-45,0,0]) cube([130,10,10]);
         translate([-3,48+15,depth+5.78]) rotate([-45,0,0]) cube([130,10,10]);
 
-        translate([width-3-3+3,70,-2]) rotate([0,0,-45]) cube([10,10,58]);
+        difference() {
+            translate([width-3-3+3,70,-2]) rotate([0,0,-45]) cube([10,10,58]);
+            // side hole extensions
+            for(h = right_side_holes) {
+                if (h[0] > 60) {
+                    translate([width-1,60,h[1]-6]) cube([3.8,h[0]-60+6,12]);
+                }
+            }
+        }
+        
+        // side extension corners
+        for(h = right_side_holes) {
+            if (h[0] > 60) {
+                translate([width-1,h[0]+8,h[1]-6]) rotate([0,0,-45]) cube([10,10,12]);
+            }
+        }
 
         translate([width-3,0-10,-20]) rotate([0,-45,-45]) cube([20,20,20]);
         translate([width-3,0-10,depth-4]) rotate([0,-45,-45] )cube([20,20,20]);
 
-        translate([width-3,60,-10]) rotate([-35,-45,-45]) cube([20,20,20]);
+        translate([width-3,60,-10]) rotate([-35,-45,-45]) cube([20,10,16]);
         translate([width-3,60,depth+16]) rotate([-55,48,-48]) cube([20,20,20]);
 
         translate([width-19,-5,depth+18.28]) rotate([0,45,0]) cube([20,90,20]);
@@ -101,8 +123,10 @@ module PSU_COVER(width=100, depth=50, left_back_hole=[6,54.7], right_back_hole=[
         translate([right_back_hole[0],right_back_hole[1],-3.7]) cylinder(r2=2, r1=3.5,h=1.5,$fn=15);
 
         // Left side bracket screw hole
-        translate([width+32,32+26,depth+2-25]) rotate([0,-90,0]) cylinder(r=2.5,h=50,$fn=35);
-        translate([width+3.1,32+26,depth+2-25]) rotate([0,-90,0]) cylinder(r2=2.5, r1=4.1,h=3,$fn=15);
+        for(h = right_side_holes) {
+            translate([width+32,h[0],h[1]]) rotate([0,-90,0]) cylinder(r=2.5,h=50,$fn=35);
+            translate([width+3.1,h[0],h[1]]) rotate([0,-90,0]) cylinder(r2=2.5, r1=4.1,h=3,$fn=15);
+        }
         translate([-0.3,0,-1.2]) CubeAdjust(width+4, depth+5.25);
 
         hull() {
@@ -130,18 +154,23 @@ module all_in_one_socket_cutout(width, depth) {
     
     module form() {
         difference() {
-            cube([47.5,27,30], center=true);
+            cube([47.5,26.8,30], center=true);
             translate([47.5/2,-27/2,0]) rotate([0,0,45]) cube([cut_side,cut_side,35],center=true);
             translate([47.5/2,27/2,0]) rotate([0,0,45]) cube([cut_side,cut_side,35],center=true);
         }
     }
     
     translate([width-40,18,depth-10]) {
-        form();
-        hull() {
-            translate([0,0,-1.7]) scale([1,1.1,1]) form();
-            translate([0,1.7,-4.7]) scale([1,1.2,1]) form();
+        union() {
+            form();
+            hull() {
+                translate([0,0,-1.5]) scale([1,1.1,1]) form();
+                translate([0,1.7,-4.7]) scale([1,1.2,1]) form();
+            }
+            translate([47.5/2-12,-26.8/2-3,9])  cube([5,5,5],center=true);
+            translate([-47.5/2+9,-26.8/2-3,9])  cube([5,5,5],center=true);
         }
+        
     }
 }
 
@@ -202,12 +231,12 @@ module PSU_cover_240W() {
     d = 50;
     union() {
         difference() {
-            PSU_COVER(w, d, left_back_hole=[8.3,99], right_back_hole=[110-16.6,99]);
+            PSU_COVER(w, d, left_back_hole=[8.3,99], right_back_hole=[110-16.6,99],right_side_holes=[[58,27]]);
             all_in_one_socket_cutout(w, d);
         }
         PSU_Y_REINFORCEMENT();
     }
-    //translate([-1.5,38,2.2]) mock_PSU_240W();
+    %translate([-1.5,38,2.2]) mock_PSU_240W();
 }
 
 // Chinese 240W S-250-12 for Dollo
@@ -217,7 +246,7 @@ module dollo_PSU_cover_240W() {
     union() {
         difference() {
             union() {
-                PSU_COVER(w, d, left_back_hole=[8.3,99], right_back_hole=[110-16.6,99]);
+                PSU_COVER(w, d, left_back_hole=[8.3,99], right_back_hole=[110-16.6,99],right_side_holes=[[58,27]]);
                 translate([-1,0,28.5]) cube([6.5,48.6,12]);
             }
             all_in_one_socket_cutout(w, d);
@@ -225,22 +254,49 @@ module dollo_PSU_cover_240W() {
         }
         translate([-20,0,0]) PSU_Y_REINFORCEMENT();
     }
-    //translate([-1.5,38,2.2]) mock_PSU_240W();
+    %translate([-1.5,38,2.2]) mock_PSU_240W();
 }
 
-module dollo_PSU_top_harness() {
+module dollo_PSU_cover_360W() {
+    w = 113.3;
+    d = 50;
+    union() {
+        difference() {
+            union() {
+                PSU_COVER(w, d, left_back_hole=[30,70], right_back_hole=[w-33.1,70],right_side_holes=[[70,13.7],[70,39.2]]);
+                translate([-1,0,28.5]) cube([6.5,38,12]);
+            }
+            all_in_one_socket_cutout(w, d);
+            translate([-2,-1,34.5]) rotate([-90,-90,0]) male_dovetail(50);
+            translate([-2,40,11]) cube([5,20,40]);
+            translate([-2,38,12.3]) cube([2,20,40]);
+        }
+        translate([-20,0,0]) PSU_Y_REINFORCEMENT();
+    }
+    %translate([-1.5,38,2.2]) mock_PSU_360W();
+}
+
+module _dollo_top_harness(w, d) {
     difference() {
         union() {
             chamfered_cube_side(46,30,7,3);
-            translate([-13-slop,18.5,0]) chamfered_cube_side(57+2*slop,119+2*slop,7,2);
+            translate([-13-slop,18.5,0]) chamfered_cube_side(d+7+2*slop,w+9+2*slop,7,2);
         }
         translate([8,-7,-0.1]) cube([30,30,8]);
         translate([10.5,-7,-0.1]) cube([25,35,8]);
         translate([8.001,8,-0.1]) rotate([0,0,90]) male_dovetail();
         translate([8+30,8,-0.1]) rotate([0,0,-90]) male_dovetail();
         
-        translate([-9.5-slop,23.5,-0.1]) cube([50+2*slop,110+2*slop,8]);
+        translate([-9.5-slop,23.5,-0.1]) cube([d+2*slop,w+2*slop,8]);
     }
+}
+
+module dollo_PSU_top_harness_240W() {
+    _dollo_top_harness(110, 50);
+}
+
+module dollo_PSU_top_harness_360W() {
+    _dollo_top_harness(113.3, 50);
 }
 
 module dollo_PSU_spacer() {
@@ -253,5 +309,7 @@ module dollo_PSU_spacer() {
 //PSU_cover();
 //PSU_cover_240W();
 //dollo_PSU_cover_240W();
-dollo_PSU_top_harness();
+//dollo_PSU_cover_360W();
+dollo_PSU_top_harness_240W();
+//dollo_PSU_top_harness_360W();
 //dollo_PSU_spacer();

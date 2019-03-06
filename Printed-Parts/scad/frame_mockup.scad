@@ -135,7 +135,7 @@ module PSU(dollo=false) {
         translate([130.5,74,23.5]) rotate([90,0,90]) dollo_PSU_cover_240W();
         %translate([132.5,72.5,61.5]) rotate([90,0,90]) mock_PSU_240W();
         translate([159,72.5,22]) dollo_PSU_spacer();
-        translate([142,49,153.5]) dollo_PSU_top_harness();
+        translate([142,49,153.5]) dollo_PSU_top_harness_240W();
     } else {
         translate([130.5,48,24]) rotate([90,0,90]) PSU_cover_240W();
         %translate([132.5,46.5,62]) rotate([90,0,90]) mock_PSU_240W();

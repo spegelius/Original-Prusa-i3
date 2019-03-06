@@ -49,6 +49,33 @@ module mock_PSU_Prusa() {
 }
 
 
+module mock_PSU_360W() {
+    w = 113.2;
+    h = 199;
+    d = 50;
+    
+    color("silver") difference() {
+        cube([w,h,d]);
+        translate([1.4,-1,19]) cube([w-2*1.4,20,d]);
+        translate([1.4,-1,5]) cube([12,20,d]);
+        
+        translate([w+1,32,11.5]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
+        translate([w+1,32,d-13]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
+        
+        translate([w+1,32+151,11.5]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
+        translate([w+1,32+151,d-13]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
+        
+        translate([9,32,10.5]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
+        translate([9,32+151,10.5]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
+        
+        translate([31.5,32,-0.1]) cylinder(d=3,h=10,$fn=20);
+        translate([w-31.5,32,-0.1]) cylinder(d=3,h=10,$fn=20);
+        
+        translate([31.5,32+151,-0.1]) cylinder(d=3,h=10,$fn=20);
+        translate([w-31.5,32+151,-0.1]) cylinder(d=3,h=10,$fn=20);
+    }
+}
+
 module mock_PSU_240W() {
     w = 110;
     h = 199;
@@ -82,4 +109,5 @@ module mock_40mm_fan() {
 }
 
 //mock_PSU_240W();
-mock_40mm_fan();
+mock_PSU_360W();
+//mock_40mm_fan();

@@ -318,9 +318,9 @@ module view_new() {
 }
 
 //translate([220,0,0]) view_original();
-//translate([-220,0,0]) view_new();
+translate([-220,0,0]) view_new();
 //rotate([90,0,0]) extention_cross();
 //extention_middle();
 //bed_carriage_assembly();
 //extention_130();
-top_corner();
+//top_corner();

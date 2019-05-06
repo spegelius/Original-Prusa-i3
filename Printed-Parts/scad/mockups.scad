@@ -8,24 +8,6 @@ module mock_LM8UU() {
     }
 }
 
-module _mock_PSU(w,h,d) {
-    color("silver") difference() {
-        cube([w,h,d]);
-        translate([-1,-1,24]) cube([w,12,d]);
-        translate([-1,-1,11]) cube([12,12,d]);
-        
-        translate([w+1,19.5,d/2]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        translate([w+1,19.5+150.7,12]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        translate([w+1,19.5+150.7,d-13]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        
-        translate([10,61,-0.1]) cylinder(d=3,h=10,$fn=20);
-        translate([w-15,61,-0.1]) cylinder(d=3,h=10,$fn=20);
-        
-        translate([10,61+126,-0.1]) cylinder(d=3,h=10,$fn=20);
-        translate([w-15,61+126,-0.1]) cylinder(d=3,h=10,$fn=20);
-    }
-}
-
 module mock_PSU_Prusa() {
     w = 98;
     h = 199;
@@ -42,56 +24,6 @@ module mock_PSU_Prusa() {
         
         translate([7.5,16.8,-0.1]) cylinder(d=3,h=10,$fn=20);
         translate([w-30.2,20,-0.1]) cylinder(d=3,h=10,$fn=20);
-        
-        translate([10,61+126,-0.1]) cylinder(d=3,h=10,$fn=20);
-        translate([w-15,61+126,-0.1]) cylinder(d=3,h=10,$fn=20);
-    }
-}
-
-
-module mock_PSU_360W() {
-    w = 114;
-    h = 215;
-    d = 50;
-    
-    color("silver") difference() {
-        cube([w,h,d]);
-        translate([1.4,-1,19]) cube([w-2*1.4,20,d]);
-        translate([1.4,-1,5]) cube([12,20,d]);
-        
-        translate([w+1,32,11]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        translate([w+1,32,11+25]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        
-        translate([w+1,32+150,11]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        translate([w+1,32+150,11+25]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        
-        translate([9,32,11]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        translate([9,32+150,11]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        
-        translate([31.5,32,-0.1]) cylinder(d=3,h=10,$fn=20);
-        translate([w-31.5,32,-0.1]) cylinder(d=3,h=10,$fn=20);
-        
-        translate([31.5,32+151,-0.1]) cylinder(d=3,h=10,$fn=20);
-        translate([w-31.5,32+151,-0.1]) cylinder(d=3,h=10,$fn=20);
-    }
-}
-
-module mock_PSU_240W() {
-    w = 110;
-    h = 199;
-    d = 50;
-    
-    color("silver") difference() {
-        cube([w,h,d]);
-        translate([-1,-1,24]) cube([w,12,d]);
-        translate([-1,-1,11]) cube([12,12,d]);
-        
-        translate([w+1,19.5,d/2]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        translate([w+1,19.5+150.7,12]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        translate([w+1,19.5+150.7,d-13]) rotate([0,-90,0]) cylinder(d=3,h=10,$fn=20);
-        
-        translate([10,61,-0.1]) cylinder(d=3,h=10,$fn=20);
-        translate([w-15,61,-0.1]) cylinder(d=3,h=10,$fn=20);
         
         translate([10,61+126,-0.1]) cylinder(d=3,h=10,$fn=20);
         translate([w-15,61+126,-0.1]) cylinder(d=3,h=10,$fn=20);

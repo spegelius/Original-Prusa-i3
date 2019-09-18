@@ -80,7 +80,7 @@ module dollo_lower_hinge() {
             translate([15.9,-2-5,12.9]) cube([13,5,25]);
             
             translate([50/2-4,5,50/2-4]) rotate([90,0,0]) cylinder(d=3,h=10,$fn=20);
-            translate([50/2-4,3.3,50/2-4]) rotate([90,30,0]) nut(3, cone=false);
+            translate([50/2-4,3.3,50/2-4]) rotate([90,30,0]) M3_nut(3, cone=false);
             
             translate([-70/2,-5,16]) rotate([45,0,0]) translate([0,-5,0]) cube([70,5,10]);
             

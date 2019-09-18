@@ -60,7 +60,7 @@ module bed_carriage() {
     module arm_coutout() {
         _bed_arm_body();
         translate([-20,bed_arm_hole_pos,0]) rotate([0,90,0]) cylinder(d=bolt_hole_dia,h=40,$fn=20);
-        translate([-18.2,bed_arm_hole_pos,0]) rotate([0,-90,0]) nut(3);
+        translate([-18.2,bed_arm_hole_pos,0]) rotate([0,-90,0]) M3_nut(3);
         translate([18,bed_arm_hole_pos,0]) rotate([0,90,0]) cylinder(d=bolt_head_hole_dia,h=80,$fn=20);
     }
 

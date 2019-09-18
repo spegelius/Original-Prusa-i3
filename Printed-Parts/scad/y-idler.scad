@@ -100,7 +100,7 @@ module dollo_y_idler_arm() {
         translate([-0.1,0,0]) rotate([0,90,0]) cylinder(d=3.5,h=21,$fn=20);
         translate([19/2,-14.5,-11]) rotate([-8,0,0]) union() {
             cylinder(d=3.3,h=10,$fn=20);
-            translate([0,0,6.2]) nut(4);
+            translate([0,0,6.2]) M3_nut(4);
         }
         translate([-0.1,20,-6]) rotate([0,90,0]) cylinder(d=3.3,h=21,$fn=20);
     }

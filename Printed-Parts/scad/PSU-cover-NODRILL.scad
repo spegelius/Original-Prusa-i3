@@ -6,6 +6,7 @@
 // http://prusamendel.org
 
 include <../../Dollo/NEW_long_ties/include.scad>;
+include <../../Dollo/NEW_long_ties/mockups.scad>;
 use <mockups.scad>;
 
 module CubeAdjust(Xdim, Zdim){

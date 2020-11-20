@@ -28,9 +28,29 @@ include <../../Dollo/NEW_long_ties/globals.scad>;
 use <../../Dollo/NEW_long_ties/psu_holder.scad>;
 use <../../Dollo/NEW_long_ties/stabilizer.scad>;
 
+
+////// VARIABLES //////
 corner_y_offset = 146;
 corner_x_offset = 152/2+18/2;
 
+
+////// VIEW //////
+translate([220,0,0])
+view_original();
+
+translate([-220,0,0])
+view_new();
+
+//rotate([90,0,0])
+//extention_cross();
+
+//extention_middle(support=true);
+//bed_carriage_assembly();
+//extention_130();
+//top_corner();
+
+
+////// MODULES //////
 module threaded_rod() {
     color("black")
     translate([200/2,0,0])
@@ -583,17 +603,3 @@ module view_new() {
     rotate([0,90,-90])
     dollo_lcd_cable_clip();
 }
-
-//translate([220,0,0])
-//view_original();
-
-//translate([-220,0,0])
-//view_new();
-
-//rotate([90,0,0])
-//extention_cross();
-
-//extention_middle(support=true);
-//bed_carriage_assembly();
-//extention_130();
-top_corner();

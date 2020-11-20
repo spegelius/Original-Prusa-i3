@@ -189,7 +189,11 @@ module cutouts(mount_holes, usb_hole, board, hb_x_pos, height) {
 
     // heatbed filament holder hole
     translate( [ hb_x_pos+81 , 89 , height-11 ] ) rotate([0,90,0]) cylinder( h = 17, r = 1.8, $fn=30);   
-    translate( [ hb_x_pos+81 , 89 , height-11 ] ) rotate([0,90,0]) cylinder( h = 2, r = 2, r2=1.8, $fn=30);   
+
+    translate([hb_x_pos+81, 89, height-11])
+    rotate([0,90,0])
+    cylinder(h=2, r1=2, r2=1.8, $fn=30);
+
     translate( [ hb_x_pos+70 , 92 , height-20 ] ) cube( [ 30 , 10 , 15] ); 
 
     // nut traps HEX  

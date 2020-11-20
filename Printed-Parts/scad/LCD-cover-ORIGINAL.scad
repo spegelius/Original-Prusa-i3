@@ -136,22 +136,36 @@ module LCD_cover(dollo=false) {
         translate( [ 72.7 , 43.2 , 3 ] ) cylinder( h = 20, r = 1.4, $fn=30);  
         translate( [ -72.5 , 42.7 , 3 ] ) cylinder( h = 20, r = 1.4, $fn=30); 
         translate( [ 72.7 , 43.2 , 14 ] ) cylinder( h = 1, r1 = 1.4, r2=2, $fn=30);  
-        translate( [ -72.5 , 42.7 , 14 ] ) cylinder( h = 1, r = 1.4, r2=2, $fn=30); 
+
+        translate([-72.5, 42.7, 14 ])
+        cylinder(h=1, r1=1.4, r2=2, $fn=30);
 
         if (dollo) {
             // DOLLO text
-            translate([-66,52,0.6]) rotate([180,0,0]) linear_extrude(height = 2) {
-                text("DOLLO3D",font = "helvetica:style=Bold", size=7, center=true);
+            translate([-66,52,0.6])
+            rotate([180,0,0])
+            linear_extrude(height = 2) {
+                text("DOLLO3D",
+                     font="helvetica:style=Bold",
+                     size=7);
             }
         } else {
             // ORIGINAL PRUSA text
-            translate([-67,52,0.6]) rotate([180,0,0]) linear_extrude(height = 2) {
-                text("ORIGINAL",font = "helvetica:style=Bold", size=7, center=true);
+            translate([-67,52,0.6])
+            rotate([180,0,0])
+            linear_extrude(height = 2) {
+                text("ORIGINAL",
+                     font="helvetica:style=Bold",
+                     size=7);
             }
         }
 
-        translate([-18,52,0.6]) rotate([180,0,0]) linear_extrude(height = 2) {
-            text("PRUSA",font = "helvetica:style=Bold", size=11, center=true);
+        translate([-18,52,0.6])
+        rotate([180,0,0])
+        linear_extrude(height = 2) {
+            text("PRUSA",
+                 font="helvetica:style=Bold",
+                 size=11);
         }
 
         translate( [ -66 , 41.5 , -0.4 ] )  cube( [ 45 , 1.6 , 1 ] );  
@@ -183,7 +197,7 @@ module LCD_cover(dollo=false) {
     }
 }
 // original
-//LCD_cover(dollo=false);
+LCD_cover(dollo=false);
 
 // Dollo
-LCD_cover(dollo=true);
+//LCD_cover(dollo=true);

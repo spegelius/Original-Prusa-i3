@@ -25,8 +25,10 @@ module waste_pocket(){
     translate([-15,-1,6]) rotate([90,0,0]) cylinder( h=5, r=5.5, $fn=30);     
     translate([-15,-1,51]) rotate([90,0,0]) cylinder( h=5, r=5.5, $fn=30);    
     translate([-15,-5.9,6]) rotate([90,0,0]) cylinder( h=3, r1=5.5, r2=4.3, $fn=30);     
-    translate([-15,-5.9,51]) rotate([90,0,0]) cylinder( h=3, r=5.5, r2=4.3, $fn=30);      
 
+    translate([-15,-5.9,51])
+    rotate([90,0,0])
+    cylinder( h=3, r1=5.5, r2=4.3, $fn=30);
     
     //M3 thread
     translate([-15,8.5,6]) rotate([90,0,0]) cylinder( h=12, r=1.7, $fn=30); 

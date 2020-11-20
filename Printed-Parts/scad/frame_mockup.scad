@@ -263,6 +263,7 @@ module PSU(dollo=false) {
         translate([142,49,153.5])
         dollo_PSU_top_harness_240W();
     } else {
+        color("DarkOrange")
         translate([130.5,48,24])
         rotate([90,0,90])
         PSU_cover_240W();
@@ -289,10 +290,10 @@ module view_original() {
     threaded_rods();
 
     // Y motor
-    //color("DarkOrange")
-    //translate([corner_x_offset-65,corner_y_offset+11,0])
-    //rotate([90,0,-90])
-    //y_motor();
+    color("DarkOrange")
+    translate([corner_x_offset-65,corner_y_offset+11,0])
+    rotate([90,0,-90])
+    y_motor();
 
     // Y idler
     color("DarkOrange")
@@ -308,16 +309,18 @@ module view_original() {
     y_distance();
 
     PSU();
-    
+
+    color("DarkOrange")
     translate([185,corner_y_offset-100-6.3,55])
     rotate([180,0,-90])
     z_bottom_right();
 
+    color("DarkOrange")
     translate([-198,corner_y_offset-100-6.3,55])
     rotate([180,0,-90])
     z_bottom_left();
 
-    color("Grey") {
+    color("DarkOrange") {
         translate([185,corner_y_offset-100-6.3,370])
         rotate([180,0,-90])
         z_top_right();
@@ -334,18 +337,21 @@ module view_original() {
     rotate([90,0,0])
     frame();
 
-    //translate([0,corner_y_offset,0])
-    //cube([100,1,10]);
+//    translate([0,corner_y_offset,0])
+//    cube([100,1,10]);
 
     bed_carriage_assembly();
-    
+
+    color("DarkOrange")
     x_ends();
-    
+
+    color("DarkOrange")
     LCD_assembly();
-    
+
+    color("DarkOrange")
     cover();
     
-    bed();
+    //bed();
 }
 
 module extention_cross() {
@@ -576,13 +582,13 @@ module view_new() {
         rotate([0,0,90])
         corner_foot();
 
-        //translate([156.5,57,-10])
-        //rotate([0,0,135])
-        //center_foot();
+        translate([156.5,57,-10])
+        rotate([0,0,135])
+        center_foot();
 
-        //translate([-156.5,57,-10])
-        //rotate([0,0,-45])
-        //center_foot();
+        translate([-156.5,57,-10])
+        rotate([0,0,-45])
+        center_foot();
     }
 
     translate([0,0,z_offset+15])
@@ -591,13 +597,13 @@ module view_new() {
     translate([0,0,243])
     x_ends();
 
-    //bed_carriage_assembly();
+    bed_carriage_assembly();
     //bed();
     
-    //translate([0,-5,0])
-    //LCD_assembly(dollo=true);
+    translate([0,-5,0])
+    LCD_assembly(dollo=true);
 
-    //cover(dollo=true);
+    cover(dollo=true);
     
     translate([-120+25,0,6])
     rotate([0,90,-90])

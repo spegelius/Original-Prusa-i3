@@ -4,6 +4,35 @@ use <../../Dollo/NEW_long_ties/include.scad>;
 include <../../Dollo/NEW_long_ties/globals.scad>;
 use <y-belt-holder.scad>;
 
+
+//debug();
+
+//bed_carriage();
+
+//bed_carriage_arm();
+
+//bed_carriage_washer();
+//bed_carriage_washer_center();
+
+// bit taller washers
+//bed_carriage_washer(7.6);
+bed_carriage_washer_center(7.6);
+
+
+module debug() {
+
+    color("grey")
+    translate([
+        -220/2 + 5.5, -220/2 + 220 - 5.5, 7/2
+    ])
+    rotate([0, 0, 45])
+    bed_carriage_arm();
+
+    translate([-220/2, -220/2, 0])
+    bed_carriage();
+}
+
+
 module original_bed() {
     translate([0,220,6.3]) rotate([180,0,0]) bed_carriage();
 
@@ -177,11 +206,23 @@ module bed_carriage_arm() {
     }
 }
 
-module bed_carriage_washer() {
+module bed_carriage_washer(h=7) {
     difference() {
-        cylinder(d=10+slop,h=6,$fn=6);
-        translate([0,0,2]) cylinder(d=6+slop,h=6,$fn=6);
-        translate([0,0,-0.1]) cylinder(d=bolt_hole_dia,h=5,$fn=20);
+        cylinder(d=10 + slop, h=h, $fn=6);
+
+        translate([0, 0, h - 4])
+        cylinder(d=6 + slop, h=h, $fn=6);
+
+        translate([0, 0, -0.1])
+        cylinder(d=bolt_hole_dia, h=h, $fn=20);
+    }
+}
+
+module bed_carriage_washer_center(h=7) {
+    union() {
+        bed_carriage_washer(h=h);
+
+        tube(14, 4, 3, $fn=6);
     }
 }
 
@@ -222,15 +263,6 @@ module qnd_belt_holder_fix() {
         translate([15/2+1,67.5-13.5,0]) cylinder(d=3.2,h=10,$fn=30);
     }
 }
-// END QND
-
 //qnd_bearing_fix();
 //qnd_belt_holder_fix();
-
-translate([-220/2,-220/2,0]) bed_carriage();
-//translate([-220/2+5.5,-220/2+220-5.5,7/2]) rotate([0,0,45]) bed_carriage_arm();
-
-//bed_carriage_arm();
-//bed_carriage_washer();
-
-
+// END QND

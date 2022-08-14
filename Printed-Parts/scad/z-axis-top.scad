@@ -8,111 +8,6 @@
 use <../../Dollo/NEW_long_ties/include.scad>;
 include <../../Dollo/NEW_long_ties/globals.scad>;
 
-module z_top_base(){
-    translate([0,-5,0]) cube([8,45,16]); // plate touching the base
-    translate([0,-5,0]) cube([30,4.01,12]); // plate touching the base
-    translate([0,-5,0]) cube([38,45,5]); // plate touching the base   
-}
-
-module z_top_fancy(){
-    // Corner cutouts
-    translate([0.5,0.5,0])         rotate([0,0,-45-180]) translate([-15,0,-1]) cube([30,30,51]);    
-
-    translate([-13,40+5+10.2,0])   rotate([0,0,-45-0])   translate([0,0,-1])   cube([30,30,51]); // frame side angle
-    translate([8,28,0]) translate([0,0,-1]) cube([50,50,51]);       
-
-    translate([4,0,12]) rotate([0,0, 0])    translate([0,-5,0]) cube([30,50,30]);          
-    translate([6,0,12]) rotate([0,-45, 0])  translate([0,-5,0]) cube([30,50,30]);
-    translate([8,4,10]) rotate([0,-45, 0])  translate([0,-5,0]) cube([30,50,30]);
-
-    translate([38-2.5,-5+2.5,0])   rotate([0,0,-45-90]) translate([-15,0,-1]) cube([30,30,51]);         
-    translate([35,26,0])           rotate([0,0,-45])    translate([-15,0,-1]) cube([30,30,51]); // outer corner
-    translate([0,0,5])             rotate([45+180,0,0]) rotate([0,0,-45+90])  translate([0,0,-15]) cube([30,30,30]);
-
-    // Stiffner cut out
-    translate([30,0,5.5]) rotate([0,-45,0]) translate([0,-5,0]) cube([30,50,30]);
-}
-
-module z_top_holes(){
-    // Screw holes frame
-    translate([-1,10,10])      rotate([0,90,0]) cylinder(h = 20, r=1.8, $fn=30);
-    translate([-1,10+20,10])   rotate([0,90,0]) cylinder(h = 20, r=1.8, $fn=30);
-        
-
-    // Screw heads
-    translate([4,10,10]) rotate([0,90,0]) cylinder(h = 20, r=3.1, $fn=30);
-    translate([4,10-3.1,10]) cube([10,6.2,10]);
-    translate([4,10+20,10])  rotate([0,90,0]) cylinder(h = 20, r=3.1, $fn=30);
-    translate([4,10+20-3.1,10]) cube([10,6.2,10]);
-
-    // Z rod holder
-    translate([25+4.3,3,-1]) rotate([0,0,0]) cylinder(h = 50, r=4.1, $fn=15);
-
-    
-    // material saving cut
-    translate([16,10,-1]) rotate([0,0,0]) cylinder(h = 50, r=8, $fn=6);  
-    translate([16,28,-1]) rotate([0,0,0]) cylinder(h = 50, r=8, $fn=6);  
-    translate([25+4.3,3+17,-1]) rotate([0,0,0]) cylinder(h = 50, r=5.8, $fn=15); // screw hole
-
-    translate([25+4.3-1,3,-1]) cube([2,15,7]); // it's bit up because it helps with printing
-    
-    //selective infill
-    translate([36.5,1.5,0.5]) cube([0.1,20,3.5]);    
-    translate([10,-3,0.5]) cube([22,0.1,3.5]);  
-    translate([3,1,0.5]) cube([18,0.1,3.5]);    
-    translate([1.5,19,0.5]) cube([21,0.1,3.5]); 
-        
- 
-}
-
-module z_top_right(){
-    difference(){
-        z_top_base();
-        z_top_fancy();
-        z_top_holes();
-    }
-}
-
-module z_top_left(){
-    translate([0,-15,0]) mirror([0,1,0]) 
-    difference(){
-        z_top_base();
-        z_top_fancy();
-        z_top_holes();
-    }
-}
-
-module dollo_z_top_right(hook=false) {
-    difference() {
-        union() {
-            z_top_right();
-            //translate([-22.3,-3,0]) cube([30.3,46,40]);
-            translate([-22.3,-3,0]) chamfered_cube(30.3,46,25,2);
-            translate([-20,2,0]) chamfered_cylinder(10,25,2,$fn=50);
-            translate([-20,38,0]) chamfered_cylinder(10,25,2,$fn=50);
-            
-            if (hook) {
-                translate([-15-2.3,-15,(pin_bolt_dia_minus+8)/2]) rotate([0,90,0]) hull() {
-                    translate([0,20,0]) cube([pin_bolt_dia_minus+8,1,10],center=true);
-                    cylinder(d=pin_bolt_dia_minus+8,h=10,center=true,$fn=40);
-                }
-            }
-        }
-        translate([-32.3,5,-1]) cube([30,30,60]);
-        translate([-2.3,20,-1]) rotate([0,0,-90]) male_dovetail(50);
-        translate([-17.3,35,-1]) rotate([0,0,0]) male_dovetail(50);
-        translate([-17.3,5,-1]) rotate([0,0,180]) male_dovetail(50);
-        translate([5.2,-5,12]) cube([5,50,20]);
-        
-        if (hook) {
-            translate([-15-2.3,-15,(pin_bolt_dia_minus+8)/2]) rotate([0,90,0]) cylinder(d=pin_bolt_dia_minus,h=11,center=true,$fn=30);
-        }
-    }
-}
-
-module dollo_z_top_left(hook=false) {
-    translate([0,-15,0]) mirror([0,1,0]) dollo_z_top_right(hook=hook);
-}
 
 // Final parts
 //z_top_left();
@@ -123,3 +18,216 @@ module dollo_z_top_left(hook=false) {
 
 //dollo_z_top_right(true);
 dollo_z_top_left(true);
+
+
+module z_top_base() {
+    translate([0, -5, 0])
+    cube([8, 45, 16]); // plate touching the base
+
+    translate([0, -5, 0])
+    cube([30, 4.01, 12]); // plate touching the base
+
+    translate([0, -5, 0])
+    cube([38, 45, 5]); // plate touching the base   
+}
+
+module z_top_fancy() {
+    // Corner cutouts
+    translate([0.5, 0.5, 0])
+    rotate([0, 0,-45 - 180])
+    translate([-15, 0, -1])
+    cube([30, 30, 51]);
+
+    // frame side angle
+    translate([-13, 40 + 5 + 10.2, 0])
+    rotate([0, 0, -45 - 0])
+    translate([0, 0, -1])
+    cube([30, 30, 51]);
+
+    translate([8, 28, 0])
+    translate([0, 0, -1])
+    cube([50, 50, 51]);       
+
+    translate([4, -1, 12])
+    translate([0, -5, 0])
+    cube([30, 50, 30]);
+
+    translate([6, 0, 12])
+    rotate([0, -45, 0])
+    translate([0, -5, 0])
+    cube([30, 50, 30]);
+
+    translate([8, 4, 10])
+    rotate([0, -45, 0])
+    translate([0, -5, 0])
+    cube([30, 50, 30]);
+
+    translate([38 - 2.5, -5 + 2.5, 0])
+    rotate([0, 0, -45 - 90])
+    translate([-15, 0, -1])
+    cube([30, 30, 51]);         
+
+    // outer corner
+    translate([35, 26, 0])
+    rotate([0, 0, -45])
+    translate([-15, 0, -1])
+    cube([30, 30, 51]);
+
+    translate([0, 0, 5])
+    rotate([45 + 180, 0, 0])
+    rotate([0, 0, -45 + 90])
+    translate([0, 0, -15])
+    cube([30, 30, 30]);
+
+    // Stiffner cut out
+    translate([30, -1, 5.5])
+    rotate([0, -45, 0])
+    translate([0, -5, 0])
+    cube([30, 50, 30]);
+}
+
+module z_top_holes() {
+    // Screw holes frame
+    translate([-1, 10, 10])
+    rotate([0, 90, 0])
+    cylinder(h=20, r=1.8, $fn=30);
+
+    translate([-1, 10 + 20, 10])
+    rotate([0, 90, 0])
+    cylinder(h=20, r=1.8, $fn=30);
+
+    // Screw heads
+    translate([4, 10, 10])
+    rotate([0, 90, 0])
+    cylinder(h=20, r=3.1, $fn=30);
+
+    translate([4, 10 - 3.1, 10])
+    cube([10, 6.2, 10]);
+
+    translate([4, 10 + 20, 10])
+    rotate([0, 90, 0])
+    cylinder(h=20, r=3.1, $fn=30);
+
+    translate([4, 10 + 20 - 3.1, 10])
+    cube([10, 6.2, 10]);
+
+    // Z rod holder
+    translate([25 + 4.3, 3, -1])
+    cylinder(h=50, r=4.1, $fn=15);
+
+    // material saving cut
+    translate([16, 10, -1])
+    cylinder(h=50, r=8, $fn=6);  
+
+    translate([16, 28, -1])
+    cylinder(h=50, r=8, $fn=6);  
+
+    // screw hole
+    translate([25 + 4.3, 3 + 17, -1])
+    cylinder(h=50, r=5.8, $fn=15);
+
+    // it's bit up because it helps with printing
+    translate([25 + 4.3 - 1, 3, -1])
+    cube([2, 15, 7]);
+
+    //selective infill
+    translate([36.5, 1.5, 0.5])
+    cube([0.1, 20, 3.5]);    
+
+    translate([10, -3, 0.5])
+    cube([22, 0.1, 3.5]);  
+
+    translate([3, 1, 0.5])
+    cube([18, 0.1, 3.5]);    
+
+    translate([1.5, 19, 0.5])
+    cube([21, 0.1, 3.5]); 
+}
+
+module z_top_right() {
+    difference(){
+        z_top_base();
+        z_top_fancy();
+        z_top_holes();
+    }
+}
+
+module z_top_left() {
+    translate([0, -15, 0])
+    mirror([0, 1, 0]) 
+    z_top_right();
+}
+
+module dollo_z_top_right(hook=false) {
+    difference() {
+        union() {
+            z_top_right();
+
+            //translate([-22.3, -3, 0])
+            //cube([30.3, 46, 40]);
+
+            translate([-22.3, -3, 0])
+            chamfered_cube(30.3, 46, 25, 2);
+
+            translate([-20, 2, 0])
+            chamfered_cylinder(10, 25, 2, $fn=50);
+
+            translate([-20, 38, 0])
+            chamfered_cylinder(10, 25, 2, $fn=50);
+
+            if (hook) {
+                translate([
+                    -15 - 2.3, -15,
+                    (pin_bolt_dia_minus + 8)/2
+                ])
+                rotate([0, 90, 0])
+                hull() {
+                    translate([0, 20, 0])
+                    cube([
+                        pin_bolt_dia_minus + 8,
+                        1,10
+                    ], center=true);
+
+                    cylinder(
+                        d=pin_bolt_dia_minus + 8,
+                        h=10, center=true, $fn=40
+                    );
+                }
+            }
+        }
+        translate([-32.3, 5, -1])
+        cube([30, 30, 60]);
+
+        translate([-2.3, 20, -1])
+        rotate([0, 0, -90])
+        male_dovetail(50);
+
+        translate([-17.3, 35, -1])
+        male_dovetail(50);
+
+        translate([-17.3, 5, -1])
+        rotate([0, 0, 180])
+        male_dovetail(50);
+
+        translate([5.2, -5, 12])
+        cube([5, 50, 20]);
+
+        if (hook) {
+            translate([
+                -15 -2.3, -15,
+                (pin_bolt_dia_minus + 8)/2
+            ])
+            rotate([0, 90, 0])
+            cylinder(
+                d=pin_bolt_dia_minus,
+                h=11, center=true, $fn=30
+            );
+        }
+    }
+}
+
+module dollo_z_top_left(hook=false) {
+    translate([0, -15, 0])
+    mirror([0, 1, 0])
+    dollo_z_top_right(hook=hook);
+}

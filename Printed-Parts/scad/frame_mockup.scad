@@ -457,6 +457,8 @@ module view_new() {
 
     // main frame
     color("DarkGrey") {
+
+        // bottom
         translate([120 - 25, 102, 30/2])
         rotate([-90, 0, 0])
         render()
@@ -528,65 +530,6 @@ module view_new() {
             support=false
         );
 
-        translate([-167, corner_y_offset - 89, 442])
-        rotate([0, 135, 0])
-        render()
-        corner_90(
-            corner_len=75, extra_stiff=true,
-            support=false
-        );
-
-        translate([167, corner_y_offset - 89, 442])
-        rotate([0, -135, 0])
-        render()
-        corner_90(
-            corner_len=75, extra_stiff=true,
-            support=false
-        );
-
-        //translate([400, 0, 0]) {
-            translate([
-                -165, corner_y_offset - 89, 110
-            ])
-            render()
-            extention(4, support=false);
-
-            translate([
-                165, corner_y_offset - 89, 110
-            ])
-            render()
-            extention(4, support=false);
-
-            translate([
-                -165, corner_y_offset - 89, 230
-            ])
-            render()
-            extention(4, support=false);
-
-            translate([
-                165, corner_y_offset - 89, 230
-            ])
-            render()
-            extention(4, support=false);
-
-            translate([
-                -165, corner_y_offset - 89, 320
-            ])
-            render()
-            extention(2, support=false);
-
-            translate([
-                165, corner_y_offset - 89, 320
-            ])
-            render()
-            extention(2, support=false);
-
-            translate([0, corner_y_offset - 89, 440])
-            rotate([0, 90, 0])
-            render()
-            extention(5, support=false);
-        //}
-        
         translate([
             -70/2 - 120/2, corner_y_offset - 89,
             30/2
@@ -601,6 +544,65 @@ module view_new() {
         rotate([0, 0, -90])
         render()
         extention_cross();
+
+        // top
+        translate([-167, corner_y_offset - 89, 457])
+        rotate([0, 135, 0])
+        render()
+        corner_90(
+            corner_len=75, extra_stiff=true,
+            support=false
+        );
+
+        translate([167, corner_y_offset - 89, 457])
+        rotate([0, -135, 0])
+        render()
+        corner_90(
+            corner_len=75, extra_stiff=true,
+            support=false
+        );
+
+        translate([0, corner_y_offset - 89, 440])
+        rotate([0, 90, 0])
+        render()
+        extention(5, support=false);
+        
+        // y
+        translate([
+            -165, corner_y_offset - 89, 110
+        ])
+        render()
+        extention(4, support=false);
+
+        translate([
+            165, corner_y_offset - 89, 110
+        ])
+        render()
+        extention(4, support=false);
+
+        translate([
+            -165, corner_y_offset - 89, 230
+        ])
+        render()
+        extention(4, support=false);
+
+        translate([
+            165, corner_y_offset - 89, 230
+        ])
+        render()
+        extention(4, support=false);
+
+        translate([
+            -165, corner_y_offset - 89, 327.5
+        ])
+        render()
+        extention(2.5, support=false);
+
+        translate([
+            165, corner_y_offset - 89, 327.5
+        ])
+        render()
+        extention(2.5, support=false);
     }
 
     // extra z height
@@ -703,6 +705,7 @@ module view_new() {
     render()
     dollo_y_idler_body();
 
+    // feet
     color("white") {
         translate([120 - 25, -173, -10])
         render()

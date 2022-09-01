@@ -7,18 +7,34 @@
 
 use <../../Dollo/NEW_long_ties/include.scad>;
 include <../../Dollo/NEW_long_ties/globals.scad>;
+use <../../Dollo/NEW_long_ties/extention.scad>;
+use <../../Dollo/NEW_long_ties/corner.scad>;
 
 
 // Final parts
 //z_top_left();
 //z_top_right();
 
+// Dollo parts
+debug_dollo();
+
 //dollo_z_top_right();
 //dollo_z_top_left();
 
 //dollo_z_top_right(true);
-dollo_z_top_left(true);
+//dollo_z_top_left(true);
 
+
+module debug_dollo() {
+    dollo_z_top_left();
+
+    translate([-30/2 - 2.35, -33, -52])
+    rotate([0, 45, -90])
+    corner_90(
+        corner_len=75, extra_stiff=true,
+        support=false
+    );
+}
 
 module z_top_base() {
     translate([0, -5, 0])
@@ -211,6 +227,10 @@ module dollo_z_top_right(hook=false) {
 
         translate([5.2, -5, 12])
         cube([5, 50, 20]);
+
+        translate([-2.3 - 7/2 , 40, 29.25])
+        rotate([45, 0, 0])
+        cube([8, 20, 80], center=true);
 
         if (hook) {
             translate([

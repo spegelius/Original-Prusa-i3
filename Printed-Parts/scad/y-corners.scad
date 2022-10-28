@@ -7,6 +7,16 @@
 
 use <../../Dollo/NEW_long_ties/include.scad>;
 
+
+rotate([90,0,0]) corner();
+//dollo_y_corner_left();
+//dollo_y_corner_right();
+//dollo_y_corner_back_left();
+//dollo_y_corner_back_right();
+
+//corner_pad();
+
+
 module corner_base(){	
  translate([-9,-11,0])cube([18,22,49]);
  
@@ -138,12 +148,3 @@ module corner_pad() {
         translate([0,8/2,1/2]) cube([6,3,1],center=true);
     }
 }
-
-//rotate([90,0,0]) corner();
-//dollo_y_corner_left();
-//dollo_y_corner_right();
-//dollo_y_corner_back_left();
-dollo_y_corner_back_right();
-
-//corner_pad();
-

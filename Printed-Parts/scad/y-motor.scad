@@ -10,6 +10,11 @@
 use <../../Dollo/NEW_long_ties/mockups.scad>;
 use <../../Dollo/NEW_long_ties/include.scad>;
 
+
+y_motor();
+//dollo_y_motor();
+
+
 module y_motor_base(){
     
     union()
@@ -92,9 +97,8 @@ module y_motor_holes(){
 }
 
 // Final part
-module y_motor(){
-    difference()
-    {
+module y_motor() {
+    difference() {
         y_motor_base();
         y_motor_holes();
     }
@@ -106,24 +110,57 @@ module dollo_y_motor() {
         union() {
             difference() {
                 y_motor();
-                translate([-10,0,-1]) cube([17.3,50,12]);
-                translate([-10,0,-1]) cube([27,8,12]);
+
+                translate([-10, 0, -1])
+                cube([17.3, 50, 12]);
+
+                translate([-10, 0, -1])
+                cube([27, 8, 12]);
             }
-            translate([-13.6,-3,0]) cylinder(d=10,h=25,$fn=45);
-            translate([-13.6,-3+36,0]) cylinder(d=10,h=25,$fn=45);
-            translate([-14.3,-8,0]) cube([28.5,46,25]);
-            translate([0,9,0]) cube([20,10,10]);
-            translate([7.3,-8,0]) cube([40,17,25]);
-            %translate([29,50,-20]) rotate([90,0,0]) mock_stepper_motor();
+            translate([-13.6, -3, 0])
+            cylinder(d=10, h=25, $fn=45);
+
+            translate([-13.6, -3 + 36, 0])
+            cylinder(d=10, h=25, $fn=45);
+
+            translate([-14.3, -8, 0])
+            cube([28.5, 46, 25]);
+
+            translate([0, 9, 0])
+            cube([20, 10, 10]);
+
+            translate([7.3, -8, 0])
+            cube([40, 17, 25]);
+
+            %translate([29, 50, -20])
+            rotate([90, 0, 0])
+            mock_stepper_motor();
         }
-        translate([-30+5,0,-1]) cube([30,30,30,]);
-        translate([20,-30,-1]) rotate([0,0,30]) cube([50,20,27]);
-        translate([18,-10,25]) rotate([0,35,0]) cube([26,20,27]);
-        translate([39.3,-10,10]) cube([30,20,27]);
-        translate([-15+5,30,0]) male_dovetail();
-        translate([-15+5,0,0]) rotate([0,0,180]) male_dovetail();
-        translate([5,15,0]) rotate([0,0,-90]) male_dovetail();
+
+        translate([-30 + 5, 0, -1])
+        cube([30, 30, 30]);
+
+        translate([20, -30, -1])
+        rotate([0, 0, 30])
+        cube([50, 20, 27]);
+
+        translate([18, -10, 25])
+        rotate([0, 35, 0])
+        cube([26, 20, 27]);
+
+        translate([39.3, -10, 10])
+        cube([30,20,27]);
+
+        translate([-15 + 5, 30, 0])
+        male_dovetail();
+
+        translate([-15 + 5, 0, 0])
+        rotate([0, 0, 180])
+        male_dovetail();
+
+        translate([5, 15, 0])
+        rotate([0, 0, -90])
+        male_dovetail();
     }
 }
 
-dollo_y_motor();

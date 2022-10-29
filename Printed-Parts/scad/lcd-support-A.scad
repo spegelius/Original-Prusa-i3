@@ -105,39 +105,56 @@ module lcd_support_A() {
 }
 
 module dollo_lcd_support_A() {
-    mirror([1,0,0]) difference() {
+    mirror([1, 0, 0])
+    difference() {
         union() {
             lcd_support_A();
-            translate([-72,-8,0]) chamfered_cube_side(35,40,10,4);
+
+            translate([-72, -8, 0])
+            chamfered_cube_side(35, 40, 10, 4);
         }
-        translate([-85.7,-0.4,-0.1]) cube([40,40,11]);
-        translate([-85.7+25,-0.4,-0.1]) rotate([0,0,180]) male_dovetail(15);
-        translate([-45.7,-0.4+15,-0.1]) rotate([0,0,-90]) male_dovetail(15);
-        
-        translate([-85,-10,9.7]) rounded_cube(40,40,10,3);
+        translate([-85.7, -0.4, -0.1])
+        cube([40, 40, 11]);
+
+        translate([-85.7 + 25,- 0.4, -0.1])
+        rotate([0, 0, 180])
+        male_dovetail(15);
+
+        translate([-45.7, -0.4 + 15, -0.1])
+        rotate([0, 0, -90])
+        male_dovetail(15);
+
+        translate([-85, -10, 9.7])
+        rounded_cube(40, 40, 10, 3);
+    }
+}
+
+module improved_y_lcd_support_A() {
+    difference() {
+        union() {
+            lcd_support_A();
+
+            translate([-72, 0, 0])
+            chamfered_cube_side(17, 30, 10, 4);
+
+            translate([-66.3, 47/2, 10/2])
+            chamfered_cube_side(12, 47, 10, 2, center=true);
+        }
+        translate([-70.8, 40/2, 0])
+        cube([12, 43, 32], center=true);
+
+        translate([-66.8, 47/2 - 3, 0])
+        chamfered_cube(6.1, 47, 32, 1, center=true);
+
+        translate([-70, 12, 10/2])
+        rotate([0, 90, 0])
+        cylinder(d=3.2, h=30, $fn=30);
+
+        translate([-59, 12, 20/2 + 10/2 - 5.7/2])
+        cube([2.5, 5.7, 20], center=true);
     }
 }
 
 //lcd_support_A();
-dollo_lcd_support_A();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//dollo_lcd_support_A();
+improved_y_lcd_support_A();

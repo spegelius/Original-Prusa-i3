@@ -19,6 +19,7 @@ use <mockups.scad>;
 use <RAMBo-cover-base.scad>;
 use <RAMBo-cover-hinges.scad>;
 use <RAMBo-cover-doors.scad>;
+use <improved_y.scad>;
 
 use <../../AluParts/alu-frame.scad>;
 
@@ -33,12 +34,18 @@ use <../../Dollo/NEW_long_ties/stabilizer.scad>;
 corner_y_offset = 146;
 corner_x_offset = 152/2 + 18/2;
 
+stl_base_path = "../../../_downloaded/";
+
+
 ////// VIEW //////
 translate([220, 0, 0])
 view_original();
 
 translate([-220, 0, 0])
-view_new();
+view_original_improved_y();
+
+//translate([-220, 0, 0])
+//view_new();
 
 //rotate([90, 0, 0])
 //extention_cross();
@@ -50,6 +57,47 @@ view_new();
 
 
 ////// MODULES //////
+module _MK3_LCD_supports() {
+
+    MK3_path = str(
+        stl_base_path, "Prusa/MK3S parts/"
+    );
+
+    import(
+        str(MK3_path, "lcd-supports.stl"),
+        convexity=10
+    );
+}
+
+module MK3_LCD_support_A() {
+
+    intersection() {
+        _MK3_LCD_supports();
+
+        translate([0, -200/2 - 1, 0])
+        cube([200, 200, 100], center=true);
+    }
+}
+
+module MK3_LCD_support_B() {
+
+    intersection() {
+        _MK3_LCD_supports();
+
+        translate([0, 200/2 - 1, 0])
+        cube([200, 200, 100], center=true);
+    }
+}
+
+module improved_Y() {
+    translate([0, 39.7, 0])
+    rotate([0, 0, 180])
+    new_improved_y_front();
+
+    translate([0, 46, 0])
+    new_improved_y_back();
+}
+
 module threaded_rod() {
     color("black")
     translate([200/2, 0, 0])
@@ -111,13 +159,17 @@ module corners() {
         corner();
     }
 }
-module threaded_rods() {
+
+module threaded_rods_y() {
     // corner theaded rods
     translate([-corner_x_offset, 0, 20])
     threaded_rod_large();
 
     translate([corner_x_offset, 0, 20])
     threaded_rod_large();
+}
+
+module threaded_rods_x() {
 
     translate([0, corner_y_offset + 11, 10])
     threaded_rod();
@@ -130,6 +182,11 @@ module threaded_rods() {
 
     translate([0, -corner_y_offset - 11, 30])
     threaded_rod();
+}
+
+module threaded_rods() {
+    threaded_rods_y();
+    threaded_rods_x();
 }
 
 module y_rods() {
@@ -194,8 +251,8 @@ module x_ends() {
     x_end_idler();
 }
 
-module LCD_assembly(dollo=false) {
-    translate([-0.5, -210, 49.5])
+module LCD_assembly(dollo=false, mk3=false) {
+    translate([-0.5, -210, 50])
     rotate([-135, 0, 0]) {
         LCD_cover(dollo=dollo);
 
@@ -210,19 +267,31 @@ module LCD_assembly(dollo=false) {
             rotate([0, 90, 180])
             dollo_lcd_support_B();
         } else {
-            translate([65.5, 48, 21.5])
-            rotate([45, 0, 0])
-            rotate([0, 90, 180])
-            lcd_support_A();
+            if (!mk3) {
+                translate([65.5, 48, 21.5])
+                rotate([45, 0, 0])
+                rotate([0, 90, 180])
+                lcd_support_A();
 
-            translate([-54.5, 48, 21.5])
-            rotate([45, 0, 0])
-            rotate([0, 90, 180])
-            lcd_support_B();
+                translate([-54.5, 48, 21.5])
+                rotate([45, 0, 0])
+                rotate([0, 90, 180])
+                lcd_support_B();
+            } else {
+                translate([65.5, 48, 21.5])
+                rotate([45, 0, 0])
+                rotate([0, 90, 180])
+                improved_y_lcd_support_A();
+
+                translate([-54.5, 48, 21.5])
+                rotate([45, 0, 0])
+                rotate([0, 90, 180])
+                improved_y_lcd_support_B();
+            }
         }
     }
 }
-//LCD_assembly(dollo=true);
+//!LCD_assembly(dollo=false, mk3=true);
 
 module cover(dollo=false) {
     if (dollo) {
@@ -319,7 +388,7 @@ module view_original() {
     // Y motor
     color("DarkOrange")
     translate([
-        corner_x_offset - 65,
+        corner_x_offset - 18/2 - 65,
         corner_y_offset + 11, 0
     ])
     rotate([90, 0, -90])
@@ -328,7 +397,10 @@ module view_original() {
 
     // Y idler
     color("DarkOrange")
-    translate([-19/2, -corner_y_offset + 9, 22])
+    translate([
+        corner_x_offset - 18/2 - 68 - 19,
+        -corner_y_offset + 9, 22
+    ])
     rotate([0,0, 180])
     render()
     y_idler();
@@ -396,6 +468,83 @@ module view_original() {
     cover();
     
     //bed();
+}
+
+module view_original_improved_y() {
+    //corners();
+
+    threaded_rods_y();
+
+    y_rods();
+
+    PSU();
+
+    //PSU Y part
+    color("DarkGrey")
+    translate([
+        corner_x_offset + 13,
+        corner_y_offset - 14, 6.6
+    ])
+    render()
+    improved_y_PSU_y_part();
+    
+    color("DarkOrange")
+    translate([185, corner_y_offset - 100 - 6.3, 55])
+    rotate([180, 0, -90])
+    render()
+    z_bottom_right();
+
+    color("DarkOrange")
+    translate([-198, corner_y_offset - 100 - 6.3, 55])
+    rotate([180, 0, -90])
+    render()
+    z_bottom_left();
+
+    color("DarkOrange") {
+        translate([
+            185, corner_y_offset - 100 - 6.3, 370
+        ])
+        rotate([180, 0, -90])
+        render()
+        z_top_right();
+
+        translate([
+            -200, corner_y_offset - 100 - 6.3, 370
+        ])
+        rotate([180, 0, -90])
+        render()
+        z_top_left();
+    }
+
+    z_rods();
+
+    color("DarkSlateGray")
+    translate([-185, corner_y_offset - 100, 0])
+    rotate([90, 0, 0])
+    frame();
+
+//    translate([0, corner_y_offset, 0])
+//    cube([100, 1, 10]);
+
+    bed_carriage_assembly();
+
+    color("DarkOrange")
+    render()
+    x_ends();
+
+    color("DarkOrange")
+    render()
+
+//    translate([0, -3, 0])
+//    LCD_assembly(mk3=true);
+
+    color("DarkOrange")
+    render()
+    cover();
+    
+    //bed();
+
+    improved_Y();
 }
 
 module extention_cross() {

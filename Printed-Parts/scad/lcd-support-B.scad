@@ -7,6 +7,13 @@
 
 use <lcd-support-A.scad>;
 
+
+//lcd_support_B();
+//dollo_lcd_support_B(contrast_trimmer=false);
+//dollo_lcd_support_B(contrast_trimmer=true);
+improved_y_lcd_support_B();
+
+
 module _B_additions() {
     rotate([0,0,45]) difference(){
         translate( [ -3 , 3 , 10 ] )  cube( [ 2 , 55 , 10 ] ); 
@@ -26,7 +33,9 @@ module lcd_support_B() {
 module dollo_lcd_support_B(contrast_trimmer=false) {
     module _doit() {
         union() {
-            mirror([1,0,0]) dollo_lcd_support_A();
+            mirror([1, 0, 0])
+            dollo_lcd_support_A();
+
             _B_additions();
         }
     }
@@ -35,15 +44,23 @@ module dollo_lcd_support_B(contrast_trimmer=false) {
         difference() {
             union() {
                 _doit();
-                translate([-35,20,0]) rotate([0,0,45]) cube([10,10,10]);
+
+                translate([-35, 20, 0])
+                rotate([0, 0, 45])
+                cube([10, 10, 10]);
             }
-            translate([-35,24,-0.1]) rotate([0,0,45]) cube([8,8,12.1]);
+            translate([-35, 24, -0.1])
+            rotate([0, 0, 45])
+            cube([8, 8, 12.1]);
         }
     } else {
         _doit();
     }
 }
 
-//lcd_support_B();
-dollo_lcd_support_B(contrast_trimmer=false);
-//dollo_lcd_support_B(contrast_trimmer=true);
+module improved_y_lcd_support_B() {
+    union() {
+        improved_y_lcd_support_A();
+        _B_additions();
+    }
+}

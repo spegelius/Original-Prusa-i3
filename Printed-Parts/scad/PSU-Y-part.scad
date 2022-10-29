@@ -84,13 +84,65 @@ module dollo_PSU_y_part() {
     difference() {
         union() {
             PSU_y_part();
-            translate([0,-20]) cube([18,32.9,17.5]);
+
+            translate([0, -20, 0])
+            cube([18, 32.9, 17.5]);
         }
-        translate([-25,-20,-1]) cube([37,50,40]);
-        translate([12,25,9]) rotate([90,90,0]) male_dovetail(50);
+        translate([-25, -20, -1])
+        cube([37, 50, 40]);
+
+        translate([12, 25, 9])
+        rotate([90, 90, 0])
+        male_dovetail(50);
+    }
+}
+
+module improved_y_PSU_y_part() {
+    difference() {
+        intersection() {
+            union() {
+                PSU_y_part();
+
+                translate([-3, -20, 0])
+                cube([21, 32.9, 17.5]);
+
+                translate([7, -2.5, 4])
+                rotate([0, 90, 0])
+                chamfered_cube_side(
+                    13, 35, 10, 2, center=true
+                );
+            }
+            translate([40/2 + 2, 0, -2.5])
+            cube([40, 50, 40], center=true);
+        }
+
+        translate([0, -13, 2])
+        rotate([0, 90, 0])
+        cylinder(d=3.2, h=25, center=true, $fn=20);
+
+        translate([6, -13, 2])
+        rotate([0, 90, 0])
+        M3_nut(10);
+
+        translate([12, -13, 0])
+        rotate([0, 90, 0])
+        M3_nut(4);
+
+        translate([0, 9, 2])
+        rotate([0, 90, 0])
+        cylinder(d=3.2, h=25, center=true, $fn=20);
+
+        translate([6, 9, 2])
+        rotate([0, 90, 0])
+        M3_nut(10);
+
+        translate([12, 9, 0])
+        rotate([0, 90, 0])
+        M3_nut(4);
     }
 }
 
 //PSU_y_part();
-dollo_PSU_y_part();
+//dollo_PSU_y_part();
+improved_y_PSU_y_part();
     

@@ -9,6 +9,12 @@ include <../../Dollo/NEW_long_ties/globals.scad>;
 include <../../Dollo/NEW_long_ties/include.scad>;
 use <../../Dollo/NEW_long_ties/long_tie.scad>;
 
+
+//lcd_cable_clip();
+//dollo_lcd_cable_clip();
+improved_y_lcd_cable_clip();
+
+
 module lcd_cable_clip_rod_coutout() {
     // rod cutout    
     translate([0,0,-1]) cylinder(r=5,h = 10, $fn=30);
@@ -57,14 +63,24 @@ module dollo_lcd_cable_clip() {
     union() {
         difference() {
             union() {
-                translate([6,-8,0]) cube([5.5,18,h]);
-                translate([6,-9,0]) cube([1.5,5,h]);
-                translate([6.001,0,h+4]) rotate([90,0,-90]) intersection() {
+                translate([6, -8, 0])
+                cube([5.5, 18, h]);
+
+                translate([6, -9, 0])
+                cube([1.5, 5, h]);
+
+                translate([6.001, 0, h + 4])
+                rotate([90, 0, -90])
+                intersection() {
+                    translate([0, -h, 0])
                     long_tie_split(h*2);
-                    translate([-10/2,-12,0]) cube([10,h,10]);
+
+                    translate([-10/2, -12, 0])
+                    cube([10, h, 10]);
                 }
             }
-            translate([3.5,-1,0]) cube([3,2,h+1]);
+            translate([3.5, -1, 0])
+            cube([3, 2, h + 1]);
 
             lcd_cable_clip_cable_cut(h);
             lcd_cable_clip_corners(h);
@@ -73,5 +89,29 @@ module dollo_lcd_cable_clip() {
     }
 }
 
-//lcd_cable_clip();
-dollo_lcd_cable_clip();
+module improved_y_lcd_cable_clip() {
+    h = 8;
+
+    union() {
+        difference() {
+            union() {
+                translate([6, -8, 0])
+                cube([5.5, 18, h]);
+
+                translate([6, -9, 0])
+                cube([1.5, 5, h]);
+            }
+
+            lcd_cable_clip_cable_cut(h);
+            lcd_cable_clip_corners(h);
+        }
+        lcd_cable_clip_cable_cut_ends(h);
+
+        translate([6.0009, 17/2 - 0.5, h/2])
+        rotate([0, -90, 0])
+        translate([0, -h, 0])
+        long_tie_split(16);
+    }
+    
+}
+

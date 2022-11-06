@@ -18,7 +18,7 @@ improved_y_path = str(
 //_orig_y_front();
 //debug_y_back_supports();
 //debug_feet();
-debug_lcd_cable_clip();
+//debug_lcd_cable_clip();
 //_supports_form_y_front();
 //_supports_form_y_back();
 
@@ -27,7 +27,7 @@ debug_lcd_cable_clip();
 //new_improved_y_front_soluble_supports();
 //new_improved_y_front_supports();
 
-//new_improved_y_back();
+new_improved_y_back();
 //new_improved_y_back_soluble_supports();
 //new_improved_y_back_supports();
 
@@ -55,11 +55,16 @@ module debug_feet() {
 
 module debug_lcd_cable_clip() {
 
-    color("white")
-    new_improved_y_front();
+    intersection() {
+        color("white")
+        new_improved_y_front();
 
-    translate([76, 26, 7])
-    rotate([90, 0, 180])
+//        translate()
+//        cube([200, 55, 100], center=true);
+    }
+
+    translate([76, 34, 10])
+    rotate([-90, 0, 180])
     improved_y_lcd_cable_clip();
 }
 
@@ -247,11 +252,11 @@ module _improved_frame(length) {
         // rod holes
         translate([152/2 + 18/2, 0, 20])
         rotate([90, 0, 0])
-        cylinder(d=10.4, h=500, center=true, $fn=30);
+        cylinder(d=10.8, h=500, center=true, $fn=30);
 
         translate([-152/2 - 18/2, 0, 20])
         rotate([90, 0, 0])
-        cylinder(d=10.4, h=500, center=true, $fn=30);
+        cylinder(d=10.8, h=500, center=true, $fn=30);
 
         // nut holes
         translate([152/2 + 18/2, 0, 20])

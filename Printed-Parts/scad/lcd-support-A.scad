@@ -7,6 +7,12 @@
 
 use <../../Dollo/NEW_long_ties/include.scad>;
 
+
+//lcd_support_A();
+//dollo_lcd_support_A();
+improved_y_lcd_support_A();
+
+
 module body(){
 
 difference() {
@@ -137,14 +143,16 @@ module improved_y_lcd_support_A() {
             translate([-72, 0, 0])
             chamfered_cube_side(17, 30, 10, 4);
 
-            translate([-66.3, 47/2, 10/2])
-            chamfered_cube_side(12, 47, 10, 2, center=true);
+            translate([-66.5, 47/2, 10/2])
+            chamfered_cube_side(
+                12.2, 47, 10, 1.8, center=true
+            );
         }
         translate([-70.8, 40/2, 0])
         cube([12, 43, 32], center=true);
 
         translate([-66.8, 47/2 - 3, 0])
-        chamfered_cube(6.1, 47, 32, 1, center=true);
+        cube([6.2, 47, 32], center=true);
 
         translate([-70, 12, 10/2])
         rotate([0, 90, 0])
@@ -154,7 +162,3 @@ module improved_y_lcd_support_A() {
         cube([2.5, 5.7, 20], center=true);
     }
 }
-
-//lcd_support_A();
-//dollo_lcd_support_A();
-improved_y_lcd_support_A();

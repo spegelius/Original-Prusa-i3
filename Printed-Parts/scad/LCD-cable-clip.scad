@@ -109,8 +109,8 @@ module improved_y_lcd_cable_clip() {
 
         translate([6.0009, 17/2 - 0.5, h/2])
         rotate([0, -90, 0])
-        translate([0, -h, 0])
-        long_tie_split(16);
+        translate([0, -h + 1.5, 0])
+        long_tie_split(12);
     }
     
 }

@@ -7,6 +7,12 @@
 
 use <../../Dollo/NEW_long_ties/include.scad>;
 
+
+//PSU_y_part();
+//dollo_PSU_y_part();
+improved_y_PSU_y_part();
+
+
 module base()
 {
 union(){
@@ -106,7 +112,7 @@ module improved_y_PSU_y_part() {
                 translate([-3, -20, 0])
                 cube([21, 32.9, 17.5]);
 
-                translate([7, -2.5, 4])
+                translate([7, -2.5, 5])
                 rotate([0, 90, 0])
                 chamfered_cube_side(
                     13, 35, 10, 2, center=true
@@ -116,33 +122,30 @@ module improved_y_PSU_y_part() {
             cube([40, 50, 40], center=true);
         }
 
-        translate([0, -13, 2])
+        translate([0, -13, 2.6])
         rotate([0, 90, 0])
         cylinder(d=3.2, h=25, center=true, $fn=20);
 
-        translate([6, -13, 2])
+        translate([6, -13, 2.6])
         rotate([0, 90, 0])
         M3_nut(10);
 
         translate([12, -13, 0])
         rotate([0, 90, 0])
+        scale([1.02, 1.02, 1])
         M3_nut(4);
 
-        translate([0, 9, 2])
+        translate([0, 9, 2.6])
         rotate([0, 90, 0])
         cylinder(d=3.2, h=25, center=true, $fn=20);
 
-        translate([6, 9, 2])
+        translate([6, 9, 2.6])
         rotate([0, 90, 0])
         M3_nut(10);
 
         translate([12, 9, 0])
         rotate([0, 90, 0])
+        scale([1.02, 1.02, 1])
         M3_nut(4);
     }
 }
-
-//PSU_y_part();
-//dollo_PSU_y_part();
-improved_y_PSU_y_part();
-    

@@ -2,14 +2,16 @@
 use <../../Dollo/NEW_long_ties/include.scad>;
 include <../../Dollo/NEW_long_ties/globals.scad>;
 use <../../Dollo/NEW_long_ties/corner.scad>;
+use <../../Dollo/NEW_long_ties/long_bow_tie.scad>;
 
 
 //corner_foot();
 //center_foot();
 //center_foot_hook();
-foot_pad();
+//foot_pad();
 
-//improved_y_foot();
+improved_y_foot();
+//improved_y_foot_bowtie();
 
 
 module _bottom_hole(sphere_d=6) {
@@ -281,9 +283,9 @@ module foot_pad() {
 
 module improved_y_foot() {
     difference() {
-        translate([0, 0, 15/2])
+        translate([0, 0, 14/2])
         chamfered_cube_side(
-            40, 40, 15, 5, center=true
+            40, 40, 14, 5, center=true
         );
 
         translate([-13.5, -13.5, 0])
@@ -308,4 +310,8 @@ module improved_y_foot() {
         rotate([-90, 0, 0])
         male_dovetail(100);
     }
+}
+
+module improved_y_foot_bowtie() {
+    long_bow_tie(40);
 }

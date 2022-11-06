@@ -483,7 +483,7 @@ module view_original_improved_y() {
     color("DarkGrey")
     translate([
         corner_x_offset + 13,
-        corner_y_offset - 14, 6.6
+        corner_y_offset - 14, 6
     ])
     render()
     improved_y_PSU_y_part();
@@ -535,8 +535,8 @@ module view_original_improved_y() {
     color("DarkOrange")
     render()
 
-//    translate([0, -3, 0])
-//    LCD_assembly(mk3=true);
+    translate([0, -3, 0])
+    LCD_assembly(mk3=true);
 
     color("DarkOrange")
     render()
@@ -545,6 +545,14 @@ module view_original_improved_y() {
     //bed();
 
     improved_Y();
+
+    // feet
+    translate([-88, 140, -10])
+    improved_y_foot();
+
+    translate([88, 140, -10])
+    rotate([0, 0, 180])
+    improved_y_foot();
 }
 
 module extention_cross() {

@@ -7,8 +7,13 @@ stl_path = "../STL/";
 
 
 //mockup();
+
 //new_extruder_body();
-new_extruder_lid();
+//new_extruder_idler();
+new_extruder_idler_mmu2s();
+//new_extruder_spacer_MR105zz();
+//new_extruder_spacer_MR105zz_bondtech();
+
 
 
 module mock_bondtech_gear() {
@@ -38,32 +43,43 @@ module mockup() {
 
             new_extruder_body();
 
-//            translate([-46, 36.5, 28.1])
-//            rotate([0, 180, 0])
-//            import(
-//                str(stl_path, "extruder-motor-plate.stl"),
-//                convexity=10
-//            );
+            translate([-46, 36.5, 28.1])
+            rotate([0, 180, 0])
+            import(
+                str(stl_path, "extruder-motor-plate.stl"),
+                convexity=10
+            );
 
             translate([42, 52, 17])
             rotate([0, 90, 180])
-            new_extruder_lid();
+            new_extruder_idler();
+
+//            translate([16.5, 52, 42.5])
+//            rotate([0, 90, 180])
+//            new_extruder_idler_mmu2s();
+
 //            import(
 //                str(stl_path, "extruder-idler.stl"),
 //                convexity=10
 //            );
 
-//            %translate([-4, 15.35, 48])
-//            rotate([-90, 0, 0])
-//            mock_stepper_motor();
+            %translate([-4, 15.35, 48])
+            rotate([-90, 0, 0])
+            mock_stepper_motor();
 
             translate([-4, 36.5, 1])
             MR105zz();
 
-//            translate([-4, 36.5, 6])
-//            mock_bondtech_gear();
+            translate([-4, 36.5, 6])
+            mock_bondtech_gear();
+
+            translate([-4, 36.5, 0])
+            new_extruder_spacer_MR105zz();
+
+            translate([-4, 36.5, 20.1])
+            new_extruder_spacer_MR105zz_bondtech();
         }
-//
+
 //        translate([70/2 -4, 0, 0])
 //        cube([70, 200, 100], center=true);
     }
@@ -77,7 +93,7 @@ module new_extruder_body() {
                 convexity=10
             );
 
-            translate([-5, 36.5, 5.7/2])
+            translate([-5.3, 36.5, 5.7/2])
             cube([12, 16, 5.7], center=true);
         }
 
@@ -97,19 +113,39 @@ module new_extruder_body() {
     intersection() {
         donut(10.7, 1, $fn=60);
 
-        translate([-0.5, 0, 0])
+        translate([-0.8, 0, 0])
         cube([11, 20, 20], center=true);
     }
 }
 
-module new_extruder_lid() {
+module new_extruder_idler() {
     difference() {
         import(
             str(stl_path, "extruder-idler.stl"),
             convexity=10
         );
 
-        translate([40/2, 0, 10/2 + 40.4])
+        translate([0, 0, 10/2 + 40.6])
         cube([40, 40, 10], center=true);
     }
+}
+
+module new_extruder_idler_mmu2s() {
+    difference() {
+        import(
+            str(stl_path, "extruder-idler-mmu2s.stl"),
+            convexity=10
+        );
+
+        translate([35, 0, 10/2 + 15.2])
+        cube([40, 40, 10], center=true);
+    }
+}
+
+module new_extruder_spacer_MR105zz() {
+    tube(9.8, 1, 1.4, $fn=40);
+}
+
+module new_extruder_spacer_MR105zz_bondtech() {
+    tube(8.3, 5.6, (8.3 - 5.2)/2, $fn=40);
 }

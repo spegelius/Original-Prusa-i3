@@ -18,7 +18,7 @@ improved_y_path = str(
 //_orig_y_front();
 //debug_y_back_supports();
 //debug_feet();
-debug_lcd_cable_clip();
+//debug_lcd_cable_clip();
 //_supports_form_y_front();
 //_supports_form_y_back();
 
@@ -30,6 +30,9 @@ debug_lcd_cable_clip();
 //new_improved_y_back();
 //new_improved_y_back_soluble_supports();
 //new_improved_y_back_supports();
+
+//skew_qnd_fix_testpart();
+skew_qnd_fix();
 
 
 module debug_y_back_supports() {
@@ -890,5 +893,47 @@ module new_improved_y_front_supports() {
         _supports_form_y_front();
 
         new_improved_y_front_soluble_supports();
+    }
+}
+
+module skew_qnd_fix_testpart() {
+    %new_improved_y_front();
+
+    union() {
+        cube([200, 10, 3], center=true);
+
+        translate([200/2 - 10/2, 100/2, 0])
+        cube([10, 100, 3], center=true);
+
+        hull() {
+            translate([-20, 0, 0])
+            cylinder(d=10, h=3, center=true, $fn=40);
+
+            translate([200/2 - 10/2, 100 - 10/2, 0])
+            cylinder(d=10, h=3, center=true, $fn=40);
+        }
+    }
+
+    hyp = sqrt(200*200 + 100*100);
+    echo(hyp);
+}
+
+module skew_qnd_fix() {
+    difference() {
+
+        hull() {
+            intersection() {
+                translate([85, 20, -1])
+                rotate([90, 0, 0])
+                new_improved_y_front();
+
+                cube([30, 30, 0.8], center=true);
+            }
+        }
+
+        cylinder(d=20.5, h=10, center=true, $fn=40);
+
+        translate([0, -40/2, 0])
+        cube([20, 40, 19], center=true);
     }
 }

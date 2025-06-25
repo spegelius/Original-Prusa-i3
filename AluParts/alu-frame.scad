@@ -1,5 +1,8 @@
 
-module frame() {
+//orig_bed_carriage();
+
+
+module orig_frame() {
     difference() {
         linear_extrude(6.3, convexity=10)
         import("alu-frame.dxf");
@@ -15,7 +18,7 @@ module frame() {
     }
 }
 
-module bed_carriage() {
+module orig_bed_carriage() {
     translate([-60, -105, 0])
     intersection() {
         linear_extrude(6.3, convexity=10)
@@ -25,5 +28,3 @@ module bed_carriage() {
         cube([230, 226, 30]);
     }
 }
-
-bed_carriage();

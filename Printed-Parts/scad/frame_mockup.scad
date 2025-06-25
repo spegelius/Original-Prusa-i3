@@ -44,8 +44,8 @@ view_original();
 translate([-220, 0, 0])
 view_original_improved_y();
 
-//translate([-220, 0, 0])
-//view_new();
+translate([-660, 0, 0])
+view_new();
 
 //rotate([90, 0, 0])
 //extention_cross();
@@ -210,7 +210,7 @@ module bed_carriage_assembly() {
     translate([-220/2, 70, 58.9])
     rotate([180, 0, 0]) {
         color("DarkSlateGray")
-        bed_carriage();
+        orig_bed_carriage();
 
         translate([25, 75 - 24/2, 6.3 + 7.5 - 1.9])
         rotate([-90, 0, 0])
@@ -448,7 +448,7 @@ module view_original() {
     color("DarkSlateGray")
     translate([-185, corner_y_offset - 100, 0])
     rotate([90, 0, 0])
-    frame();
+    orig_frame();
 
 //    translate([0, corner_y_offset, 0])
 //    cube([100, 1, 10]);
@@ -521,7 +521,7 @@ module view_original_improved_y() {
     color("DarkSlateGray")
     translate([-185, corner_y_offset - 100, 0])
     rotate([90, 0, 0])
-    frame();
+    orig_frame();
 
 //    translate([0, corner_y_offset, 0])
 //    cube([100, 1, 10]);
@@ -903,7 +903,8 @@ module view_new() {
     x_ends();
 
     bed_carriage_assembly();
-    //bed();
+
+    bed();
 
     color("white")
     render()

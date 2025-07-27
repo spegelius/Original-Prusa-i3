@@ -41,11 +41,11 @@ stl_base_path = "../../../_downloaded/";
 translate([220, 0, 0])
 view_original();
 
-translate([-220, 0, 0])
-view_original_improved_y();
-
-translate([-660, 0, 0])
-view_new();
+//translate([-220, 0, 0])
+//view_original_improved_y();
+//
+//translate([-660, 0, 0])
+//view_new();
 
 //rotate([90, 0, 0])
 //extention_cross();
@@ -353,16 +353,38 @@ module PSU(dollo=false) {
         render()
         dollo_PSU_top_harness_240W();
     } else {
+//        color("DarkOrange")
+//        translate([130.5, 48, 23])
+//        rotate([90, 0, 90])
+//        render()
+//        PSU_cover();
+
+        %translate([132.5, 46.5, 56])
+        rotate([90, 0, 90])
+        render()
+        mock_PSU_Prusa();
+
+//        color("DarkOrange")
+//        translate([130.5, 48, 24])
+//        rotate([90, 0, 90])
+//        render()
+//        PSU_cover_240W();
+//
+//        %translate([132.5, 46.5, 62])
+//        rotate([90, 0, 90])
+//        render()
+//        mock_PSU_240W();
+
         color("DarkOrange")
         translate([130.5, 48, 24])
         rotate([90, 0, 90])
         render()
-        PSU_cover_240W();
+        PSU_cover_360W();
 
-        %translate([132.5, 46.5, 62])
+        %translate([132.7, 46.5, 56])
         rotate([90, 0, 90])
         render()
-        mock_PSU_240W();
+        mock_PSU_360W();
     }
 }
 
@@ -375,7 +397,7 @@ module view_original() {
     corners();
 
     //PSU Y part
-    color("black")
+    color("DarkOrange")
     translate([
         corner_x_offset + 13,
         corner_y_offset - 13, 6

@@ -10,8 +10,9 @@ include <../../Dollo/NEW_long_ties/mockups.scad>;
 use <mockups.scad>;
 
 
-PSU_cover();
+//PSU_cover();
 //PSU_cover_240W();
+PSU_cover_360W();
 //dollo_PSU_cover_240W();
 //dollo_PSU_cover_360W();
 //dollo_PSU_top_harness_240W();
@@ -20,9 +21,10 @@ PSU_cover();
 
 
 module CubeAdjust(Xdim, Zdim){
-    for (x =[6:11.2:Xdim-12]){
-        for (z =[6:11.2:Zdim-12]){
-            translate([x,-0.2,z]) cube([10,0.4,10]);
+    for (x =[6:11.2:Xdim - 12]){
+        for (z =[6:11.2:Zdim - 12]){
+            translate([x, -0.2, z])
+            cube([10, 0.4, 10]);
         }
     }
 }
@@ -46,11 +48,11 @@ module nuttrap(){
 }
 
 module PSU_COVER(
-    width=100, depth=50, left_back_hole=[6,54.7],
+    width=100, depth=50, left_back_hole=[6, 54.7],
     right_back_hole=[66.3, 58], right_side_holes=[[58, 26]]
 ) {
     
-    pillar_h = max(left_back_hole[1], right_back_hole[1]) + 6;
+    pillar_h = max(left_back_hole[1], right_back_hole[1]) + 7;
     
     difference() {
         union() {
@@ -209,15 +211,15 @@ module PSU_COVER(
         translate([left_back_hole[0], left_back_hole[1], -10])
         cylinder(r=2, h=50, $fn=15);
 
-        translate([left_back_hole[0], left_back_hole[1], -3.7])
-        cylinder(r2=2, r1=3.5, h=1.5, $fn=15);
+        translate([left_back_hole[0], left_back_hole[1], -3.6])
+        cylinder(r2=2, r1=3.7, h=1.5, $fn=15);
 
         // right back mounthole cutout
         translate([right_back_hole[0], right_back_hole[1], -10])
         cylinder(r=2, h=50, $fn=15);
 
-        translate([right_back_hole[0], right_back_hole[1], -3.7])
-        cylinder(r2=2, r1=3.5, h=1.5, $fn=15);
+        translate([right_back_hole[0], right_back_hole[1], -3.6])
+        cylinder(r2=2, r1=3.7, h=1.5, $fn=15);
 
         // Left side bracket screw hole
         for(h = right_side_holes) {
@@ -227,18 +229,18 @@ module PSU_COVER(
 
             translate([width + 3.1, h[0], h[1]])
             rotate([0, -90, 0])
-            cylinder(r2=2.5, r1=4.1, h=3, $fn=15);
+            cylinder(r2=2.5, r1=4.2, h=3.1, $fn=15);
         }
         translate([-0.3, 0, -1.2])
         CubeAdjust(width + 4, depth + 5.25);
 
         hull() {
             // left back mounthole cutout
-            translate([20, 6.5, -10])
-            cylinder(r=3.5, h=50);
+            translate([20, 7.5, -10])
+            cylinder(r=5, h=50);
 
-            translate([29, 6.5, -10])
-            cylinder(r=3.5, h=50);
+            translate([29, 7.5, -10])
+            cylinder(r=5, h=50);
         }
     }
 }
@@ -375,7 +377,8 @@ module PSU_cover() {
         translate([46, 2 + 15.6, d + 2.6])
         nuttrap();
     }
-    translate([-1.5, 38, 2.2])
+
+    translate([-1.8, 33, 2])
     mock_PSU_Prusa();
 }
 
@@ -398,6 +401,44 @@ module PSU_cover_240W() {
     }
     %translate([-1.5, 38, 2.2])
     mock_PSU_240W();
+}
+
+module PSU_cover_360W() {
+    w = 113.6;
+    d = 49.7;
+
+    union() {
+        difference() {
+            union() {
+                PSU_COVER(
+                    w, d, left_back_hole=[30.5, 64],
+                    right_back_hole=[w - 33.4, 64],
+                    right_side_holes=[[64, 13.3], [64, 38.8]]
+                );
+
+//                translate([-1, 0, 28.5])
+//                cube([6.5, 38, 12]);
+            }
+
+            translate([10, 0, 0])
+            socket_cutout(w, d);
+
+            translate([-2, 40, 11])
+            cube([6, 20, 40]);
+
+            translate([-3, 38, 12.3])
+            cube([3, 20, 40]);
+        }
+
+        PSU_Y_REINFORCEMENT();
+    }
+    %intersection() {
+        translate([-1.5, 32, 2.2])
+        mock_PSU_360W();
+
+//        translate()
+//        cube([400, 500, 60], center=true);
+    }
 }
 
 // Chinese 240W S-250-12 for Dollo

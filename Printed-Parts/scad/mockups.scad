@@ -3,11 +3,9 @@ use <../../Dollo/NEW_long_ties/mockups.scad>;
 
 
 //mock_LM8UU();
-//mock_PSU_Prusa();
-//mock_PSU_240W();
-//mock_PSU_360W();
+mock_PSU_Prusa();
 //mock_40mm_fan();
-mock_bed_MK42(mount_holes=true);
+//mock_bed_MK42(mount_holes=true);
 //mock_steel_sheet();
 
 
@@ -19,42 +17,86 @@ module mock_LM8UU() {
 }
 
 module mock_PSU_Prusa() {
-    w = 98;
+    w = 98.8;
     h = 199;
-    d = 49;
+    d = 48.5;
     
-    color("silver") difference() {
+    color("silver")
+    difference() {
         cube([w, h, d]);
 
-        translate([-1, -1, 24])
-        cube([w, 12, d]);
+        // front cuts
+        translate([1.7, -1, 24])
+        cube([w - 3.4, 17, d]);
 
-        translate([-1, -1, 11])
-        cube([12, 12, d]);
-        
-        translate([w + 1, 19.5, d/2])
+        translate([1.7, -1, 11])
+        cube([6, 17, d]);
+
+        // right side screw holes
+        translate([w + 1, 25, 24])
         rotate([0, -90, 0])
         cylinder(d=3, h=10, $fn=20);
 
-        translate([w + 1, 19.5 + 150.7, 12])
+        translate([w + 1, 25, 11.5])
         rotate([0, -90, 0])
         cylinder(d=3, h=10, $fn=20);
 
-        translate([w + 1, 19.5 + 150.7, d - 13])
+        translate([w + 1, h - 57, 11.5])
         rotate([0, -90, 0])
         cylinder(d=3, h=10, $fn=20);
 
-        translate([7.5, 16.8, -0.1])
+        translate([w + 1, h - 57, d - 12])
+        rotate([0, -90, 0])
         cylinder(d=3, h=10, $fn=20);
 
-        translate([w - 30.2, 20, -0.1])
+        // left side screw holes
+        #translate([-10, 25, 12])
+        rotate([0, 90, 0])
+        cylinder(d=3, h=20, $fn=20);
+
+        #translate([-10, h - 57, 12])
+        rotate([0, 90, 0])
+        cylinder(d=3, h=20, $fn=20);
+
+        // bottom screw holes
+        translate([8.3, 22.2, -0.1])
         cylinder(d=3, h=10, $fn=20);
 
-        translate([10, 61 + 126, -0.1])
+        translate([w - 30, 25, -0.1])
         cylinder(d=3, h=10, $fn=20);
 
-        translate([w -15, 61 + 126, -0.1])
+        translate([10, h - 11, -0.1])
         cylinder(d=3, h=10, $fn=20);
+
+        translate([w - 10, h - 11, -0.1])
+        cylinder(d=3, h=10, $fn=20);
+
+        // side slots
+        hull() {
+            translate([-1, 9, 14])
+            rotate([0, 90, 0])
+            cylinder(d=4, h=4, $fn=20);
+
+            translate([-1, 9, d - 13])
+            rotate([0, 90, 0])
+            cylinder(d=4, h=4, $fn=20);
+
+        }
+
+        hull() {
+            translate([w + 1, 9, 11])
+            rotate([0, -90, 0])
+            cylinder(d=4, h=4, $fn=20);
+
+            translate([w + 1, 9, d - 13])
+            rotate([0, -90, 0])
+            cylinder(d=4, h=4, $fn=20);
+        }
+
+        translate([w + 1, 9, d - 17.5])
+        rotate([0, -90, 0])
+        cylinder(d=8, h=10, $fn=20);
+
     }
 }
 
